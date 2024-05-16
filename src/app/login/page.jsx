@@ -32,6 +32,8 @@ export default function Login() {
       console.error('Error logging in:', error);
       setErrorMessage('Internal server error');
     }
+
+    
   };
 
   return (
