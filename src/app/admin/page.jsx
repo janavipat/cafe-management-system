@@ -1,9 +1,21 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react';
+import Sidebar from './Sidebar';
 
-const page = () => {
+const AdminPage = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <div>admin</div>
-  )
-}
+    <div className="flex">
+      <div className="flex-1">
+      <Sidebar/>
+    </div>
+    </div>
+  );
+};
 
-export default page
+export default AdminPage;
