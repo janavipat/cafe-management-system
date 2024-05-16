@@ -1,7 +1,9 @@
 "use client";
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -20,11 +22,14 @@ export default function Login() {
       const responseData = await response.json();
 
       if (response.ok) {
-        // If login is successful, store token in local storage or session storage
         localStorage.setItem('token', responseData.token);
-        // Redirect or perform any other action upon successful login
-        // For now, let's just log a success message
-        console.log('Login successful');
+        // Redirect to admin page if email and password match admin credentials
+        if (email === 'admin@gmail.com' && password === 'admin@123') {
+          router.push('/admin'); // Navigate to the admin page
+        } else {
+          console.log('Login successful');
+          // Redirect or perform any other action upon successful login for regular users
+        }
       } else {
         setErrorMessage(responseData.error);
       }
@@ -32,8 +37,6 @@ export default function Login() {
       console.error('Error logging in:', error);
       setErrorMessage('Internal server error');
     }
-
-    
   };
 
   return (
