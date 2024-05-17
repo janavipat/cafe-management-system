@@ -6,6 +6,8 @@ import Product from './Product';
 import Category from './Category';
 import Bill from './Bill';
 import Swal from 'sweetalert2';
+import { jwtDecode } from 'jwt-decode'
+
 
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState('Dashboard');
@@ -16,7 +18,8 @@ const AdminPage = () => {
   useEffect(() => {
     // Check if token exists in localStorage or wherever it's stored
     const storedToken = localStorage.getItem('token');
-    const storedRole = localStorage.getItem('role');
+    const decodedToken = jwtDecode(storedToken);
+    const storedRole = decodedToken.role;
     if (storedToken && storedRole === 'admin') {
       setToken(storedToken);
       setRole(storedRole);
@@ -52,7 +55,7 @@ const AdminPage = () => {
         {activeTab === 'Dashboard' && <Dashboard />}
         {activeTab === 'Product' && <Product />}
         {activeTab === 'Category' && <Category />}
-        {activeTab === 'Bill' && <Bill />}
+        {activeTab === 'bill' && <Bill />}
       </div>
     </div>
   );
