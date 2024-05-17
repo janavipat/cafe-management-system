@@ -1,10 +1,13 @@
 "use client"
 
 import React from 'react';
+import Header from './common/header';
 
 const IndexPage = () => {
 return(
-  <> <video src="../../assets/video/cafe.mp4" autoPlay loop muted style={{ width: '100%', height: 'auto' }} />
+  <>
+  <Header />
+   <video src="../../assets/video/cafe.mp4" autoPlay loop muted style={{ width: '100%', height: 'auto' }} />
   <section className="page-section" id="about">
   <div className="container">
       <div className="text-center">

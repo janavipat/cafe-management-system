@@ -1,8 +1,11 @@
 import React from 'react';
+import Header from '../common/header';
 
 
 const AboutUsPage = () => {
     return (
+        <>
+        <Header />
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px', display: 'flex', justifyContent: 'center' }}>
             <section style={{ display: 'flex', alignItems: 'center', marginBottom: '50px', backgroundColor: '#f9f9f9', padding: '30px', borderRadius: '10px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                 <div >
@@ -30,7 +33,7 @@ const AboutUsPage = () => {
                 </div>
                
             </section>
-        </div>
+        </div></>
     );
 }
 

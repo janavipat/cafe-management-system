@@ -23,12 +23,12 @@ export default function Login() {
 
       if (response.ok) {
         localStorage.setItem('token', responseData.token);
-        // Redirect to admin page if email and password match admin credentials
+      
         if (email === 'admin@gmail.com' && password === 'admin@123') {
-          router.push('/admin'); // Navigate to the admin page
+          router.push('/admin'); 
         } else {
           console.log('Login successful');
-          // Redirect or perform any other action upon successful login for regular users
+         
         }
       } else {
         setErrorMessage(responseData.error);

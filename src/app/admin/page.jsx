@@ -1,22 +1,49 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
 import Product from './Product';
 import Category from './Category';
 import Bill from './Bill';
+import Swal from 'sweetalert2';
+
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState('Dashboard');
+  const [token, setToken] = useState(null);
+  const [role, setRole] = useState(null);
+
+  // Simulate token check on component mount
+  useEffect(() => {
+    // Check if token exists in localStorage or wherever it's stored
+    const storedToken = localStorage.getItem('token');
+    const storedRole = localStorage.getItem('role');
+    if (storedToken && storedRole === 'admin') {
+      setToken(storedToken);
+      setRole(storedRole);
+    } else {
+      // Show error message if token or role is invalid
+      Swal.fire({
+        icon: 'error',
+        title: 'Access Denied',
+        text: 'You do not have access to this page.',
+      });
+    }
+  }, []);
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
   };
 
+  if (!token || role !== 'admin') {
+    // If token or role is not valid, don't render AdminPage
+    return null;
+  }
+
   return (
     <div className="flex">
       {/* Sidebar */}
       <div className="sidebar">
-      <Sidebar activeTab={activeTab} onTabClick={handleTabClick} />
+        <Sidebar activeTab={activeTab} onTabClick={handleTabClick} />
       </div>
 
       {/* Content */}
@@ -25,7 +52,7 @@ const AdminPage = () => {
         {activeTab === 'Dashboard' && <Dashboard />}
         {activeTab === 'Product' && <Product />}
         {activeTab === 'Category' && <Category />}
-        {activeTab === 'bill' && <Bill />}
+        {activeTab === 'Bill' && <Bill />}
       </div>
     </div>
   );
