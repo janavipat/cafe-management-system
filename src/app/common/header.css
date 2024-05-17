@@ -78,8 +78,8 @@ header {
   /* Login Button */
   .login-button {
     text-decoration: none;
-    color: #fff;
-    border: 1px solid #fff;
+    color: #f59403;
+    border: 1px solid #00110b;
     padding: 5px 10px;
     border-radius: 5px;
     margin-left: 10px;

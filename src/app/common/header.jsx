@@ -7,6 +7,14 @@ const Header = (props) => {
   const cartStorage = JSON.parse(localStorage.getItem('cart'));
   const [cartNumber, setCartNumber] = useState(cartStorage?.length);
   const [cartItem, setCartItem] = useState(cartStorage || []);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    // Check for token in local storage to determine if user is logged in
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (props.Cart) {
@@ -23,7 +31,11 @@ const Header = (props) => {
       }
     }
   }, [props.Cart]);
-  
+  const logout = () => {
+    // Clear token from local storage and update login status
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+  };
   return (
     <header>
       <div className="logo">
@@ -43,7 +55,13 @@ const Header = (props) => {
           <span className="cart-count">{cartNumber}</span>
         </a>
         <a href="/profile" className="profile-link">Profile</a>
-        <a href="/login" className="login-button">Login</a>
+        {isLoggedIn ? (
+          // Render Logout button if logged in
+          <button onClick={logout} className="login-button">Logout</button>
+        ) : (
+          // Render Login button if not logged in
+          <a href="/login" className="login-button">Login</a>
+        )}
       </div>
     </header>
   );

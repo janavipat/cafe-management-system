@@ -1,9 +1,7 @@
 "use client"
 import React from 'react';
-import Header from '../common/Header';
 import Image from 'next/image';
-import Link from 'next/link';
-import { ChevronRightIcon } from '@heroicons/react/24/outline';
+import Header from '../common/Header';
 import { Fade } from 'react-awesome-reveal';
 
 const cardData = [
