@@ -34,6 +34,10 @@ const productSchema = new mongoose.Schema(
     type: String,
     default:"true",
     required: true,
+   },
+   quentity:{
+    type: Number,
+    default: 1
    }
   },
   {
