@@ -1,6 +1,7 @@
-"use client";
+"use client"
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import "./style.css"
 
 export default function SignUp() {
   const { register, handleSubmit, formState: { errors }, watch } = useForm();
@@ -37,27 +38,27 @@ export default function SignUp() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group">
           <label>Name</label>
-          <input type="text" {...register('name', { required: true, pattern: /^[A-Za-z]+$/ })} />
+          <input type="text" {...register('name', { required: true, pattern: /^[A-Za-z]+$/ })} className="input-field" />
           {errors.name && <span className="error">Name is required and should contain only letters</span>}
         </div>
         <div className="form-group">
           <label>Email</label>
-          <input type="email" {...register('email', { required: true, pattern: /^\S+@\S+$/i })} />
+          <input type="email" {...register('email', { required: true, pattern: /^\S+@\S+$/i })} className="input-field" />
           {errors.email && <span className="error">Email is required and must be valid</span>}
         </div>
         <div className="form-group">
           <label>Password</label>
-          <input type="password" {...register('password', { required: true, minLength: 8, maxLength: 15 })} />
+          <input type="password" {...register('password', { required: true, minLength: 8, maxLength: 15 })} className="input-field" />
           {errors.password && errors.password.type === 'required' && <span className="error">Password is required</span>}
           {errors.password && errors.password.type === 'minLength' && <span className="error">Password must be at least 8 characters long</span>}
           {errors.password && errors.password.type === 'maxLength' && <span className="error">Password cannot exceed 15 characters</span>}
         </div>
         <div className="form-group">
           <label>Contact</label>
-          <input type="text" {...register('contact', { required: true, pattern: /^[0-9]{10}$/ })} />
+          <input type="text" {...register('contact', { required: true, pattern: /^[0-9]{10}$/ })} className="input-field" />
           {errors.contact && <span className="error">Contact is required and must be 10 digits long</span>}
         </div>
-        <button type="submit">Sign Up</button>
+        <button type="submit" className="submit-button">Sign Up</button>
       </form>
       {errorMessage && <p className="error">{errorMessage}</p>}
       {successMessage && <p className="success">{successMessage}</p>}
@@ -76,13 +77,13 @@ export default function SignUp() {
           display: block;
           margin-bottom: 5px;
         }
-        input {
+        .input-field {
           width: 100%;
           padding: 8px;
           border: 1px solid #ccc;
           border-radius: 4px;
         }
-        button {
+        .submit-button {
           background-color: #007bff;
           color: #fff;
           border: none;
@@ -90,7 +91,7 @@ export default function SignUp() {
           padding: 10px 20px;
           cursor: pointer;
         }
-        button:hover {
+        .submit-button:hover {
           background-color: #0056b3;
         }
         .error {
