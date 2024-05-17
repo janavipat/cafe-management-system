@@ -42,7 +42,7 @@ useEffect(()=>{
       <div className="profile">
         <a href="/cart"><AddShoppingCartIcon /></a>
         {cartNumber}
-        <a href="#" style={{ textDecoration: 'none', color: '#fff', border: '1px solid #fff', padding: '5px 10px', borderRadius: '5px' , marginLeft:"10px"}}>Profile</a>
+        <a href="/profile" style={{ textDecoration: 'none', color: '#fff', border: '1px solid #fff', padding: '5px 10px', borderRadius: '5px' , marginLeft:"10px"}}>Profile</a>
       </div>
     </header>
 );
