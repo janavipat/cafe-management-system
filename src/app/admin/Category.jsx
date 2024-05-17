@@ -28,6 +28,7 @@ const CategoryPage = () => {
   const [editCategoryId, setEditCategoryId] = useState(null);
   const [editCategoryName, setEditCategoryName] = useState('');
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -35,7 +36,7 @@ const CategoryPage = () => {
       setToken(storedToken);
       fetchCategories(storedToken);
     }
-  }, [editCategoryName,categories]);
+  }, []);
 
   const fetchCategories = async (token) => {
     try {
@@ -63,6 +64,7 @@ const CategoryPage = () => {
     } catch (error) {
       console.error('Error adding category:', error);
     }
+    fetchCategories(token);
   };
 
   const handleDeleteCategory = async (categoryId) => {
@@ -76,6 +78,7 @@ const CategoryPage = () => {
     } catch (error) {
       console.error('Error deleting category:', error);
     }
+    fetchCategories(token);
   };
 
   const openEditDialog = (categoryId, categoryName) => {
@@ -102,11 +105,22 @@ const CategoryPage = () => {
     } catch (error) {
       console.error('Error updating category:', error);
     }
+    fetchCategories(token);
   };
 
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
   return (
     <div style={{ textAlign: 'center' }}>
       <h1 style={{ color: 'orange' }}>Categories</h1>
+      <TextField
+        label="Search Categories"
+        variant="outlined"
+        value={searchTerm}
+        onChange={handleSearch}
+        style={{ marginBottom: '20px' }}
+      />
 
       <Dialog open={isEditDialogOpen} onClose={() => setIsEditDialogOpen(false)}>
         <DialogTitle>Edit Category</DialogTitle>
@@ -174,7 +188,11 @@ const CategoryPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {categories.map((category) => (
+            {categories
+              .filter((category) =>
+                category.name.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+              .map((category) => (
               <TableRow key={category._id}>
                 <TableCell>{category.name}</TableCell>
                 <TableCell>

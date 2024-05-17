@@ -31,8 +31,10 @@ const ProductPage = () => {
 const [newProductCategoryName, setNewProductCategoryName] = useState('');
 const [newProductDescription, setNewProductDescription] = useState('');
 const [newProductPrice, setNewProductPrice] = useState('');
-const [newProductStatus, setNewProductStatus] = useState('');
+
 const [update , setUpdate] = useState("");
+const [filter, setFilter] = useState('');
+const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -41,7 +43,23 @@ const [update , setUpdate] = useState("");
       fetchProducts(storedToken);
       fetchcategory(storedToken);
     }
-  }, [update]);
+  }, []);
+  useEffect(() => {
+    
+    if (filter === '') {
+      setFilteredProducts(products);
+    } else {
+      const filtered = products.filter(
+        product =>
+          product.name.toLowerCase().includes(filter.toLowerCase()) ||
+          product.categoryId.name.toLowerCase().includes(filter.toLowerCase()) ||
+          product.price.toString().includes(filter) ||
+          product.description.toLowerCase().includes(filter.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+      
+    }
+  }, [filter, products]);
 
   const fetchcategory = async (token)=>{
     try {
@@ -85,7 +103,7 @@ const [update , setUpdate] = useState("");
         categoryId: selectedCategory._id,
         description: newProductDescription,
         price: newProductPrice,
-        status: newProductStatus,
+        
       };
   
       // Send a POST request to add the new product
@@ -115,6 +133,7 @@ const [update , setUpdate] = useState("");
     } catch (error) {
       console.error('Error deleting product:', error);
     }
+    fetchProducts(token);
   };
 
   const handleEditProduct = async (productId) => {
@@ -133,7 +152,7 @@ const [update , setUpdate] = useState("");
         categoryId: selectedCategory._id,
         description: newProductDescription,
         price: newProductPrice,
-        status: newProductStatus,
+        
       };
       // Send a PUT request to update the product
       const res = await axios.put(
@@ -161,31 +180,33 @@ const [update , setUpdate] = useState("");
     } catch (error) {
       console.error('Error editing product:', error);
     }
+    setIsEditDialogOpen(false);
+    fetchProducts(token);
   };
   
 
-  const handleUpdateStatus = async (productId, status) => {
+  const handleChangeStatus = async (productId) => {
     try {
+      const productToUpdate = products.find(product => product._id === productId);
+      console.log(productToUpdate)
+      const newStatus = productToUpdate.status === "true" ? "false" : "true";
+      
+      // Update the status of the product to be changed
       const res = await axios.put(
-        'http://localhost:5000/product/updatestatus',
-        { id: productId, status },
+        `http://localhost:5000/product/updatestatus/${productId}`,
+        { status: newStatus },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      const updatedProducts = products.map((product) => {
-        if (product._id === productId) {
-          return { ...product, status };
-        }
-        return product;
-      });
-      setProducts(updatedProducts);
     } catch (error) {
       console.error('Error updating product status:', error);
     }
+    fetchProducts(token);
   };
+  
   const [id,setId]= useState('');
   const openEditDialog = (productid) => {
    productid ? setId(productid) : "";
@@ -236,15 +257,7 @@ const [update , setUpdate] = useState("");
       value={newProductPrice}
       onChange={(e) => setNewProductPrice(e.target.value)}
     />
-    <TextField
-      margin="dense"
-      id="productStatus"
-      label="Status"
-      type="text"
-      fullWidth
-      value={newProductStatus}
-      onChange={(e) => setNewProductStatus(e.target.value)}
-    />
+   
   <DialogActions>
     <Button onClick={() => setIsEditDialogOpen(false)} color="primary">
       Cancel
@@ -296,15 +309,7 @@ const [update , setUpdate] = useState("");
       value={newProductPrice}
       onChange={(e) => setNewProductPrice(e.target.value)}
     />
-    <TextField
-      margin="dense"
-      id="productStatus"
-      label="Status"
-      type="text"
-      fullWidth
-      value={newProductStatus}
-      onChange={(e) => setNewProductStatus(e.target.value)}
-    />
+   
   </DialogContent>
   <DialogActions>
     <Button onClick={() => setIsDialogOpen(false)} color="primary">
@@ -324,7 +329,13 @@ const [update , setUpdate] = useState("");
       >
         Add New Product
       </Button>
-
+      <TextField
+        label="Search"
+        variant="outlined"
+        style={{ marginBottom: '20px' }}
+        value={filter}
+        onChange={e => setFilter(e.target.value)}
+      />
       <TableContainer component={Paper} style={{ display: 'inline-block', textAlign: 'left' }}>
         <Table>
           <TableHead>
@@ -335,10 +346,11 @@ const [update , setUpdate] = useState("");
               <TableCell>description</TableCell>
               <TableCell>Edit</TableCell>
               <TableCell>Delete</TableCell>
+              <TableCell>Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-  {products.map((product) => (
+  {filteredProducts.map((product) => (
     <TableRow key={product._id}>
       <TableCell>{product.name || "-"}</TableCell>
       <TableCell>{product.price || "-"}</TableCell>
@@ -354,6 +366,11 @@ const [update , setUpdate] = useState("");
           <DeleteIcon />
         </Button>
       </TableCell>
+      <TableCell>
+                  <Button onClick={() => handleChangeStatus(product._id)}>
+                    {product.status === 'true' ? 'true' : 'false'}
+                  </Button>
+                </TableCell>
     </TableRow>
   ))}
 </TableBody>
