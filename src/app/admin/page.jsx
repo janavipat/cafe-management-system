@@ -4,6 +4,7 @@ import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
 import Product from './Product';
 import Category from './Category';
+import Bill from './Bill';
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState('Dashboard');
 
@@ -24,7 +25,7 @@ const AdminPage = () => {
         {activeTab === 'Dashboard' && <Dashboard />}
         {activeTab === 'Product' && <Product />}
         {activeTab === 'Category' && <Category />}
-        {/* Add more components for other tabs as needed */}
+        {activeTab === 'bill' && <Bill />}
       </div>
     </div>
   );

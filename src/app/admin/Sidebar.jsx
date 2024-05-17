@@ -46,6 +46,13 @@ const Sidebar = ({ activeTab, onTabClick }) => {
         <img src="../../assets/img/category.svg" alt="Manage Category" style={{ width: '20px', height: '20px', marginRight: '10px' }} />
         Manage Category
       </div>
+      <div
+        style={{ padding: '10px 0', cursor: 'pointer', display: 'flex', alignItems: 'center', backgroundColor: activeTab === 'bill' ? 'orange' : '' }}
+        onClick={() => onTabClick('bill')}
+      >
+        <img src="../../assets/img/category.svg" alt="Manage Category" style={{ width: '20px', height: '20px', marginRight: '10px' }} />
+        bill
+      </div>
     </div>
   );
 }
