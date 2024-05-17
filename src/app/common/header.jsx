@@ -1,7 +1,32 @@
 "use client";
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
-const Header = () => (
+const Header = (props) =>{ 
+  
+const cartStorage = JSON.parse(localStorage.getItem('cart'));
+const [cartNumber , setCartNumber] = useState(cartStorage?.length);
+const [cartItem, setCartItem] = useState(cartStorage || []);
+console.log(props.Cart)
+useEffect(()=>{
+  if(props.Cart){
+    if(cartNumber){
+      let localcartitem = [...cartItem];
+       localcartitem.push(JSON.parse(JSON.stringify(props.Cart)));
+       setCartItem(localcartitem);
+       setCartNumber(cartNumber + 1);
+       localStorage.setItem('cart', JSON.stringify(localcartitem));
+    }else{
+      setCartNumber(1);
+      setCartItem(props.Cart);
+      localStorage.setItem('cart', JSON.stringify([props.Cart]));
+
+    }
+  }
+},[props.Cart]);
+  
+  
+  return(
     <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px', backgroundColor: '#333', color: '#fff' }}>
       <div className="logo" style={{ display: 'flex', alignItems: 'center' }}>
         <img src="../../assets/img/cafe.png" alt="Logo" style={{ maxWidth: '30px' }} />
@@ -15,9 +40,11 @@ const Header = () => (
         </ul>
       </nav>
       <div className="profile">
+        <AddShoppingCartIcon />
+        {cartNumber}
         <a href="#" style={{ textDecoration: 'none', color: '#fff', border: '1px solid #fff', padding: '5px 10px', borderRadius: '5px' }}>Profile</a>
       </div>
     </header>
 );
-
+}
 export default Header;

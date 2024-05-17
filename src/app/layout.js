@@ -1,8 +1,6 @@
-import { Inter } from "next/font/google";
 import "./globals.scss";
 import Headers from "../app/common/header";
-
-const inter = Inter({ subsets: ["latin"] });
+import { CartProvider } from "../context/cart_context";
 
 export const metadata = {
   title: "Create Next App",
@@ -12,9 +10,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Headers />
-        {children}</body>
+      <head>
+      </head>
+      <body>
+        <CartProvider>
+       
+          {children}
+        </CartProvider>
+      </body>
     </html>
   );
 }
