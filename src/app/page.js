@@ -2,6 +2,11 @@
 
 import React from 'react';
 import Header from './common/header';
+import Footer from './common/footer';
+import Gallery from './common/Gallary';
+import Whychooseus from "./common/Whychooseus"
+import Cook from './common/Cookwithus';
+import MultipleItems from "./common/Expert"
 
 const IndexPage = () => {
 return(
@@ -92,6 +97,11 @@ return(
       </ul>
   </div>
 </section>
+<Cook />
+<MultipleItems />
+<Whychooseus />
+<Gallery />
+<Footer />
 </>)
 
 }
