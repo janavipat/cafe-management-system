@@ -97,8 +97,8 @@ checkRole.checkRole, async (req, res) => {
     }
   });
 
-  router.put('/updatestatus', auth.authenticateToken, checkRole.checkRole,async (req,res)=>{
-    const productId = req.body.id;
+  router.put('/updatestatus/:id', auth.authenticateToken, checkRole.checkRole,async (req,res)=>{
+    const productId = req.params.id;
     const status = req.body.status;
     try {
       const product = await Product.findByIdAndUpdate(productId, { status: status }, { new: true });

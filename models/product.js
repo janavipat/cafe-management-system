@@ -19,7 +19,7 @@ const productSchema = new mongoose.Schema(
    },
    categoryId:{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Category", // Ensure correct model name here
+    ref: "Category",
     required: true,
    },
    description:{
