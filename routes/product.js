@@ -5,7 +5,6 @@ const Product = require("../models/product")
 const jwt = require("jsonwebtoken");
 var auth = require("../services/authenticate");
 var checkRole = require("../services/checkRole");
-const { routes } = require("..");
 require("dotenv").config();
 
 
