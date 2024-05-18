@@ -203,4 +203,33 @@ router.put("/changepassword", auth.authenticateToken, async (req, res) => {
   }
 });
 
+
+router.post("/user/update-profile", auth.authenticateToken, (req, res) => {
+  // Validate if the provided email matches the email associated with the token
+  const tokenEmail = req.user.email;
+  const { email, password, name, contact, status, role } = req.body;
+
+  // Validate if the email matches the email associated with the token
+  if (tokenEmail !== email) {
+    return res.status(403).send("Access denied. Email mismatch.");
+  }
+
+  // Validate password here if needed
+
+  // Update the user profile in the database
+  Userdata.findOneAndUpdate(
+    { email },
+    { name, contact, password, status, role },
+    { new: true },
+    (err, user) => {
+      if (err) {
+        console.error("Error updating profile:", err);
+        res.status(500).send("Failed to update profile.");
+      } else {
+        res.send("Profile updated successfully.");
+      }
+    }
+  );
+});
+
 module.exports = router;
