@@ -17,6 +17,7 @@ const Header = (props) => {
   }, []);
 
   useEffect(() => {
+    
     if (props.Cart) {
       if (cartNumber) {
         let localcartitem = [...cartItem];

@@ -120,7 +120,12 @@ const [filteredProducts, setFilteredProducts] = useState([]);
     } catch (error) {
       console.error('Error adding product:', error);
     }
-    fetchProducts(token)
+    fetchProducts(token);
+    setNewProductCategoryName("");
+    setNewProductDescription("");
+    setNewProductName("");
+    setNewProductPrice("");
+    
   };
   
   const handleDeleteProduct = async (productId) => {

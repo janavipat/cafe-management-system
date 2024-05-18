@@ -6,13 +6,14 @@ import './cart.css';
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [showPaymentPage, setShowPaymentPage] = useState(false);
   const router = useRouter();
+  const [quality , setQuality] = useState(1);
 
   useEffect(() => {
     const cartStorage = JSON.parse(localStorage.getItem('cart'));
     setCartItems(cartStorage || []);
-  }, []);
+    
+  }, [cartItems]);
 
   const handleDeleteItem = (index) => {
     const updatedCart = [...cartItems];
@@ -23,7 +24,7 @@ const CartPage = () => {
 
   const handleIncreaseQuantity = (index) => {
     const updatedCart = [...cartItems];
-    updatedCart[index].quantity += 1; // Increment quantity directly
+    updatedCart[index].quantity = Number(updatedCart[index].quantity) + 1; 
     setCartItems(updatedCart);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
@@ -31,7 +32,7 @@ const CartPage = () => {
   const handleDecreaseQuantity = (index) => {
     const updatedCart = [...cartItems];
     if (updatedCart[index].quantity > 1) {
-      updatedCart[index].quantity -= 1; // Decrement quantity if greater than 1
+      updatedCart[index].quantity = Number(updatedCart[index].quantity) - 1; 
       setCartItems(updatedCart);
       localStorage.setItem('cart', JSON.stringify(updatedCart));
     }
@@ -47,7 +48,7 @@ const CartPage = () => {
   };
 
   // Calculate total price
-  const totalPrice = cartItems.reduce((acc, curr) => acc + (curr.price * curr.quantity || 0), 0); // Ensure price and quantity are valid numbers
+  const totalPrice = cartItems.reduce((acc, curr) => acc + (curr.price * curr.quantity || 0), 0); 
 
   return (
     <>
@@ -67,10 +68,10 @@ const CartPage = () => {
               {cartItems.map((item, index) => (
                 <tr key={index}>
                   <td>{item.name}</td>
-                  <td>${item.price}</td>
+                  <td>$ {Number(item.price)}</td>
                   <td>
                     <button onClick={() => handleDecreaseQuantity(index)} style={{marginRight:"30px"}}>-</button>
-                    {item.quantity}
+                    {isNaN(item.quantity) || item.quantity === '' ? 1 : Number(item.quantity)}
                     <button onClick={() => handleIncreaseQuantity(index)} style={{marginLeft:"30px"}}>+</button>
                   </td>
                   <td>

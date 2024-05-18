@@ -9,6 +9,8 @@
 body {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     background: #ffffff;
+    margin-top: 130px;
+   
 }
 
 input,
@@ -76,6 +78,7 @@ button {
     color: #fff;
     font-size: 15px;
     cursor: pointer;
+    background-color: orange;
 }
 
 .img {
@@ -251,7 +254,7 @@ input {
     margin-top: 15px;
     text-align: center;
     font-size: 12px;
-    color: #cfcfcf;
+    
 }
 
 .submit {

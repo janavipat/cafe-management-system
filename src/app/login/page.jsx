@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import "./login.css";
+import ForgotPassword from './forgot/page';
 
 export default function AuthComponent() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -68,12 +69,15 @@ export default function AuthComponent() {
       setErrorMessage('Internal server error');
     }
   };
+  const ForgotPassword = ()=>{
+    router.push("/login/forgot")
+  }
 
   return (
     <div className={`cont ${isSignUp ? 's--signup' : ''}`}>
       <div className="form sign-in">
-        <h2>Welcome</h2>
-        <form onSubmit={handleSignIn}>
+        <h2 style={{color:'orange', fontSize:"30px", fontWeight:"700"}}>WELCOME</h2>
+        <form onSubmit={handleSignIn} style={{marginTop:"50px"}}>
           <label>
             <span>Email</span>
             <input
@@ -90,7 +94,7 @@ export default function AuthComponent() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
-          <p className="forgot-pass">Forgot password?</p>
+          <p className="forgot-pass" onClick={ForgotPassword} style={{color:"red", fontSize:"15px", marginTop:"50px"}}>Forgot password?</p>
           <button type="submit" className="submit">Sign In</button>
         </form>
         {errorMessage && <p className="error">{errorMessage}</p>}
@@ -98,10 +102,10 @@ export default function AuthComponent() {
       <div className="sub-cont">
         <div className="img">
           <div className="img__text m--up">
-            <h3>Don't have an account? Please Sign up!</h3>
+            <h3 style={{fontSize:"27px", fontWeight:"700"}}>Don't have an account? Please Sign up!</h3>
           </div>
           <div className="img__text m--in">
-            <h3>If you already have an account, just sign in.</h3>
+            <h3 style={{fontSize:"27px", fontWeight:"700"}}>If you already have an account, just sign in.</h3>
           </div>
           <div className="img__btn" onClick={handleToggle}>
             <span className="m--up">Sign Up</span>
@@ -109,7 +113,7 @@ export default function AuthComponent() {
           </div>
         </div>
         <div className="form sign-up">
-          <h2>Create your Account</h2>
+          <h2 style={{color:'orange', fontSize:"30px", fontWeight:"700"}}>Create your Account</h2>
           <form onSubmit={handleSubmit(handleSignUp)}>
             <label>
               <span>Name</span>
