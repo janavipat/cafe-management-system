@@ -1,18 +1,15 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Avatar from "@mui/material/Avatar";
+import RupeeIcon from '@mui/icons-material/AttachMoney';
+
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import Button from "@mui/material/Button";
-import { useCartContext } from "@/context/cart_context";
+import TextField from "@mui/material/TextField";
+import Pagination from "@mui/material/Pagination";
 import Header from "../common/header";
+import { Grid, Card, CardHeader, CardMedia, CardContent, CardActions, Typography, Button, Box } from '@mui/material';
+
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -25,16 +22,50 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const CardContainer = styled('div')({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-  gap: '20px',
-  marginTop: '20px',
+const CardContainer = styled("div")({
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+  gap: "20px",
+  marginTop: "20px",
+});
+
+const FilterContainer = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: "20px",
+  padding: "10px",
+  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+  borderRadius: "8px",
+});
+
+const FilterItem = styled("div")({
+  flex: "1",
+  marginRight: "10px",
+});
+
+const StyledPagination = styled(Pagination)({
+  display: "flex",
+  justifyContent: "center",
+  marginTop: "20px",
+  "& .MuiPaginationItem-root": {
+    transition: "transform 0.3s, box-shadow 0.3s",
+    "&:hover": {
+      transform: "scale(1.1)",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+    },
+  },
 });
 
 export default function RecipeReviewCard() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState();
+
+  const [category, setCategory] = useState("");
+  const [productName, setProductName] = useState("");
+  const [price, setPrice] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     fetchProducts();
@@ -42,19 +73,24 @@ export default function RecipeReviewCard() {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("http://localhost:5000/product/products");
+      const response = await fetch("http://localhost:5000/order/products", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ categoryName: category, productName, price, page, limit: 9 }),
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch products");
       }
       const data = await response.json();
       setProducts(data);
+      setTotalPages(data.totalPages);
     } catch (error) {
       console.error("Error fetching products:", error.message);
     }
   };
-
   const getImageUrl = (productName) => {
-    // If a matched image is found, return its URL; otherwise, return the default image URL
     return `../../assets/order/${productName}.jpg` || "../../assets/order/food.jpg";
   };
   const handleAddToCart = (product) => {
@@ -63,49 +99,99 @@ export default function RecipeReviewCard() {
   };
  
 
+  const handleFilter = () => {
+    setPage(1);
+    fetchProducts();
+  };
 
 
-  return (<>
-  <Header Cart= {cart}/>
-  <CardContainer>
-      {products.map((product) => (
-        <Card key={product.id} sx={{ maxWidth: 345 }}>
-          <CardHeader
-            avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                R
-              </Avatar>
-            }
-            title={product.name}
-            subheader={`Category: ${product.categoryId.name}`}
+  return (
+    <>
+      <Header Cart={cart} />
+      <FilterContainer style={{marginTop:"50px", width:"90%", marginLeft:"90px"}}>
+        <FilterItem>
+          <TextField
+            label="Category"
+            variant="outlined"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            fullWidth
           />
-         <CardMedia
-  component="img"
-  height="200"
-  width="200"
-  src={getImageUrl(product.name)}
-  alt={product.name}
-  onError={(e) => {
-    e.target.src =  "../../assets/order/food.jpg"; // Set the default image URL here
-  }}
-/>
-          <CardContent>
-            <Typography variant="body2" color="text.secondary">
-              {product.description}
-            </Typography>
-            <Typography paragraph>price:</Typography>
-            <Typography paragraph>{product.price}</Typography>
-          </CardContent>
-          <CardActions disableSpacing>
-            <Button variant="contained" color="success" onClick={()=> handleAddToCart(product)}>
-              ADD
-            </Button>
-          </CardActions>
-        </Card>
-      ))}
-    </CardContainer>
-  
-  </>
+        </FilterItem>
+        <FilterItem>
+          <TextField
+            label="Product"
+            variant="outlined"
+            value={productName}
+            onChange={(e) => setProductName(e.target.value)}
+            fullWidth
+          />
+        </FilterItem>
+        <FilterItem>
+          <TextField
+            label="Price"
+            variant="outlined"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            fullWidth
+          />
+        </FilterItem>
+        <Button variant="contained" onClick={handleFilter} style={{backgroundColor:"orange"}}>
+          Filter
+        </Button>
+      </FilterContainer>
+      <Box sx={{ flexGrow: 1, padding: 2 }}>
+      <Grid container spacing={3}>
+        {products.slice(0, 8).map((product) => (
+          <Grid item xs={12} sm={6} md={3} key={product.id}>
+            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', borderRadius: '16px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+              <CardMedia
+                component="img"
+                height="200"
+                src={product.image || "../../assets/order/food.jpg"} // Use product image or fallback image
+                alt={product.name}
+                style={{ objectFit: 'cover', borderTopLeftRadius: '16px', borderTopRightRadius: '16px' }}
+              />
+              <CardContent sx={{ padding: '16px' }}>
+                <Typography variant="body2" color="text.secondary" sx={{ marginBottom: '8px', minHeight: '60px', fontSize:"20px" }}>
+                  {product.description}
+                </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize:"20px", fontWeight:"900px" }}>
+                  <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+                    {product.name}
+                  </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <RupeeIcon sx={{ marginRight: '4px' }} />
+                    <Typography variant="body1" sx={{fontSize:"20px", fontWeight:"700"}}>
+                      {product.price}
+                    </Typography>
+                  </Box>
+                </Box>
+              </CardContent>
+              <CardActions sx={{ justifyContent: 'center', padding: '16px' }}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={() => handleAddToCart(product)}
+                  sx={{ borderRadius: '8px', marginTop:"-20px" }}
+                >
+                  ADD
+                </Button>
+              </CardActions>
+             
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+
+
     
+      <StyledPagination
+        count={totalPages}
+        page={page}
+        onChange={(event, value) => setPage(value)}
+      />
+    </>
   );
 }

@@ -120,6 +120,7 @@ const [filteredProducts, setFilteredProducts] = useState([]);
     } catch (error) {
       console.error('Error adding product:', error);
     }
+    fetchProducts(token)
   };
   
   const handleDeleteProduct = async (productId) => {
@@ -149,7 +150,7 @@ const [filteredProducts, setFilteredProducts] = useState([]);
   
       // Prepare the updated product object
       const newProduct = {
-        name: newProductName,
+        name: newProductName ,
         categoryId: selectedCategory._id,
         description: newProductDescription,
         price: newProductPrice,
@@ -209,16 +210,21 @@ const [filteredProducts, setFilteredProducts] = useState([]);
   };
   
   const [id,setId]= useState('');
-  const openEditDialog = (productid) => {
+  const openEditDialog = (productid, product) => {
    productid ? setId(productid) : "";
     setIsEditDialogOpen(true);
+    setNewProductCategoryName(product.categoryId.name);
+    setNewProductDescription(product.description);
+    setNewProductName(product.name);
+    setNewProductPrice(product.price);
+
   };
   
   return (
     <div style={{ textAlign: 'center' }}>
-      <Dialog open={isEditDialogOpen} onClose={() => setIsEditDialogOpen(false)}>
-  <DialogTitle>Edit Product</DialogTitle>
-  <DialogContent>update product
+      <Dialog open={isEditDialogOpen} onClose={() => setIsEditDialogOpen(false)} sx={{ border:"1px solid black"}}>
+  <DialogTitle sx={{textAlign:"center", fontWeight:"700", fontSize:"25px", color:"orange"}}>Edit Product</DialogTitle>
+  <DialogContent sx={{width:"500px"}}>
   </DialogContent>
   <TextField
       autoFocus
@@ -227,6 +233,7 @@ const [filteredProducts, setFilteredProducts] = useState([]);
       label="Product Name"
       type="text"
       fullWidth
+      sx={{paddingLeft:"10px",  paddingRight:"10px"}}
       value={newProductName}
       onChange={(e) => setNewProductName(e.target.value)}
     />
@@ -236,6 +243,7 @@ const [filteredProducts, setFilteredProducts] = useState([]);
       label="Category ID"
       type="text"
       fullWidth
+      sx={{paddingLeft:"10px",  paddingRight:"10px"}}
       value={newProductCategoryName}
       onChange={(e) => setNewProductCategoryName(e.target.value)}
     />
@@ -245,6 +253,7 @@ const [filteredProducts, setFilteredProducts] = useState([]);
       label="Description"
       type="text"
       fullWidth
+      sx={{paddingLeft:"10px",  paddingRight:"10px"}}
       value={newProductDescription}
       onChange={(e) => setNewProductDescription(e.target.value)}
     />
@@ -254,6 +263,7 @@ const [filteredProducts, setFilteredProducts] = useState([]);
       label="Price"
       type="number"
       fullWidth
+      sx={{paddingLeft:"10px",  paddingRight:"10px"}}
       value={newProductPrice}
       onChange={(e) => setNewProductPrice(e.target.value)}
     />
@@ -269,7 +279,7 @@ const [filteredProducts, setFilteredProducts] = useState([]);
 </Dialog>
 
       <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-  <DialogTitle>Add New Product</DialogTitle>
+  <DialogTitle sx={{textAlign:"center", fontWeight:"700", fontSize:"25px", color:"orange"}}>Add New Product</DialogTitle>
   <DialogContent>
     <DialogContentText>Enter the details of the new product:</DialogContentText>
     <TextField
@@ -365,7 +375,7 @@ const [filteredProducts, setFilteredProducts] = useState([]);
       <TableCell>{  product.categoryId ? product.categoryId.name : "-"}</TableCell>
       <TableCell>{product.description || "-"}</TableCell>
       <TableCell>
-        <Button onClick={()=>openEditDialog(product._id)}>
+        <Button onClick={()=>openEditDialog(product._id, product)}>
           <EditIcon />
         </Button>
       </TableCell>

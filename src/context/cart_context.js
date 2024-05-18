@@ -1,7 +1,6 @@
 "use client"
 import React, { createContext, useContext, useReducer } from 'react';
 
-// Define initial value for the context
 const initialValue = {
     cart: [],
     totalItems: 0,
@@ -9,7 +8,6 @@ const initialValue = {
     shippingFee: 50000
 };
 
-// Define your reducer function
 const reducer = (state, action) => {
     switch (action.type) {
         case "ADD_TO_CART":
@@ -19,7 +17,6 @@ const reducer = (state, action) => {
                 totalItems: state.totalItems + 1,
                 totalAmount: state.totalAmount + action.payload.price
             };
-        // Add other cases for different actions if needed
         default:
             return state;
     }

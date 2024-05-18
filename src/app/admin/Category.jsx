@@ -129,7 +129,7 @@ const CategoryPage = () => {
       />
 
       <Dialog open={isEditDialogOpen} onClose={() => setIsEditDialogOpen(false)}>
-        <DialogTitle>Edit Category</DialogTitle>
+        <DialogTitle sx={{textAlign:"center", fontWeight:"700", fontSize:"25px", color:"orange"}}>Edit Category</DialogTitle>
         <DialogContent>
           <DialogContentText>Edit the name of the category.</DialogContentText>
           <TextField
@@ -153,7 +153,7 @@ const CategoryPage = () => {
         </DialogActions>
       </Dialog>
       <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-        <DialogTitle>Add New Category</DialogTitle>
+        <DialogTitle sx={{textAlign:"center", fontWeight:"700", fontSize:"25px", color:"orange"}}>Add New Category</DialogTitle>
         <DialogContent>
           <DialogContentText>Enter the name of the new category.</DialogContentText>
           <TextField

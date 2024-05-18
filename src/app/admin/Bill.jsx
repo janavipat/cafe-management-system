@@ -128,6 +128,7 @@ const IndexPage = () => {
   };
 
   const downloadBill = async (uuid, billData) => {
+    console.log(billData.productdetails)
     try {
       const response = await axios.post('http://localhost:5000/bill/getpdf', { uuid, billData }, {
         responseType: 'blob',
@@ -147,7 +148,6 @@ const IndexPage = () => {
       console.error('Error downloading bill:', error);
     }
   };
-  
   const deleteBill = async (billId) => {
     try {
       const response = await axios.delete(`http://localhost:5000/bill/delete/${billId}`, {
