@@ -2,6 +2,7 @@
 import React, {useState, useEffect} from 'react';
 import CountUp from 'react-countup';
 import { Circle } from "rc-progress";
+import "./dashboard.css"
 
 
 const Dashboard = () => {
@@ -61,12 +62,12 @@ const Dashboard = () => {
                           </div>
                           <div style={{ width: "168px" }}>
                             {" "}
-                            <h3 className="mb-2 m-6">Total category</h3>
+                            <h3 className="mb-2 m-6" style={{fontSize:"25px", fontWeight:"800", width:"300px", marginLeft:"0px"}}>Total category</h3>
                           </div>
 
                           {/* Counter */}
-                          <div>
-                            <h1 style={{ fontSize: "700" }}>
+                          <div style={{ animation: "scaleAnimation 1s ease-in-out" }}>
+  <h1 style={{ fontSize: "30px", color: "orange", fontWeight: "900" }}>
                               <CountUp
                                 start={0}
                                 end={counts.categoryCount}
@@ -91,7 +92,7 @@ const Dashboard = () => {
                               percent={counts.categoryCount}
                               strokeWidth={10}
                               trailWidth={10}
-                              strokeColor="GREEN"
+                              strokeColor="orange"
                             />
                           </div>
                         </div>
@@ -108,7 +109,7 @@ const Dashboard = () => {
                     >
                       <div
                         className="max-auto bg-sky-30 rounded-xl shadow-lg p-4"
-                        style={{ display: "flex",marginLeft:"30px", }}
+                        style={{ display: "flex",marginLeft:"20px", }}
                       >
                         {/* Left side */}
                         <div
@@ -131,19 +132,15 @@ const Dashboard = () => {
                           </div>
                           <div style={{ width: "188px" }}>
                             {" "}
-                            <h3 className="mb-2 m-6">Total Product</h3>
+                            <h3 className="mb-2 m-6" style={{fontSize:"25px", fontWeight:"800", width:"300px", marginLeft:"0px"}}>Total Product</h3>
                           </div>
 
                           {/* Counter */}
-                          <div>
-                            <h1 style={{ fontSize: "700" }}>
-                              <CountUp
-                                start={0}
-                                end={counts.productCount}
-                                duration={1}
-                              />
-                            </h1>
-                          </div>
+                          <div style={{ animation: "scaleAnimation 1s ease-in-out" }}>
+  <h1 style={{ fontSize: "30px", color: "orange", fontWeight: "900" }}>
+    <CountUp start={0} end={counts.productCount} duration={1} />
+  </h1>
+</div>
                         </div>
                         {/* Right side */}
                         <div
@@ -161,7 +158,7 @@ const Dashboard = () => {
                               percent={counts.productCount}
                               strokeWidth={10}
                               trailWidth={10}
-                              strokeColor="GREEN"
+                              strokeColor="orange"
                             />
                           </div>
                         </div>
@@ -202,12 +199,12 @@ const Dashboard = () => {
                           </div>
                           <div style={{ width: "168px" }}>
                             {" "}
-                            <h3 className="mb-2 m-6">Total bill</h3>
+                            <h3 className="mb-2 m-6" style={{fontSize:"25px", fontWeight:"800", width:"300px", marginLeft:"0px"}}>Total bill</h3>
                           </div>
 
                           {/* Counter */}
-                          <div>
-                            <h1 style={{ fontSize: "700" }}>
+                          <div style={{ animation: "scaleAnimation 1s ease-in-out" }}>
+  <h1 style={{ fontSize: "30px", color: "orange", fontWeight: "900" }}>
                               <CountUp
                                 start={0}
                                 end={counts.billCount}
@@ -232,7 +229,7 @@ const Dashboard = () => {
                               percent={counts.billCount}
                               strokeWidth={10}
                               trailWidth={10}
-                              strokeColor="GREEN"
+                              strokeColor="orange"
                             />
                           </div>
                         </div>
