@@ -13,8 +13,9 @@ const IndexPage = () => {
   const [bills, setBills] = useState([]);
   const [token, setToken] = useState('');
   const containerStyle = {
-    maxWidth: '1000px',
-    marginLeft:"90px",
+    marginTop:"60px",
+    Width: '900px',
+    marginLeft:"100px",
     margin: '0 auto',
     fontFamily: 'Arial, sans-serif',
     backgroundColor: 'white',
@@ -39,7 +40,7 @@ const IndexPage = () => {
     borderRadius: '5px',
     border: 'none',
     cursor: 'pointer',
-    backgroundColor: '#007bff',
+    backgroundColor: 'orange',
     color: '#fff',
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
     transition: 'background-color 0.3s ease',
@@ -47,8 +48,10 @@ const IndexPage = () => {
 
   const addProductButtonStyle = {
     ...buttonStyle,
-    backgroundColor: '#28a745',
-    margin: '10px 0',
+    backgroundColor: 'orange',
+    marginTop:"20px",
+    marginLeft:"335px",
+    marginBottom:"20px"
   };
 
   const listItemStyle = {
@@ -160,9 +163,12 @@ const IndexPage = () => {
       console.error('Error deleting bill:', error);
     }
   };
-  return ( <div style={containerStyle}>
-  <h1 style={{ textAlign: 'center', color: '#333' }}>Bill Generator</h1>
-  <div style={{ marginBottom: '20px' }}>
+  return ( <div style={{width:"900px",marginTop:"100px", marginLeft:"100px",borderRadius: '10px',
+  boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', 
+  fontFamily: 'Arial, sans-serif',
+  backgroundColor: 'white',
+  padding: '50px'}}>
+  <div style={{ marginBottom: '20px'}}>
     <div style={{ display: 'flex', marginBottom: '10px' }}>
       <input style={{ ...inputStyle, marginRight: '10px', flex: '1' }} type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
       <input style={{ ...inputStyle, flex: '1' }} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
@@ -182,8 +188,8 @@ const IndexPage = () => {
           <div style={{ flex: '1', marginLeft: '10px' }}>
             <input style={inputStyle} type="text" value={product.category} onChange={(e) => updateProduct(index, 'category', e.target.value)} placeholder="Category" />
           </div>
-          <div style={{ flex: '1', marginRight: '10px' }}>
-            <input style={inputStyle} type="number" value={product.quantity} onChange={(e) => updateProduct(index, 'quantity', parseInt(e.target.value))} placeholder="Quantity" />
+          <div style={{ flex: '1', marginLeft: '10px' }}>
+            <input style={inputStyle} type="number" value={product.quantity}  onChange={(e) => updateProduct(index, 'quantity', parseInt(e.target.value))} placeholder="Quantity" />
           </div>
           <div style={{ flex: '1', marginLeft: '10px' }}>
             <input style={inputStyle} type="number" value={product.price} onChange={(e) => updateProduct(index, 'price', parseFloat(e.target.value))} placeholder="Price" />
@@ -198,7 +204,6 @@ const IndexPage = () => {
     <button style={buttonStyle} onClick={generateBill}>Generate Bill</button>
   </div>
   <div>
-  <h2 style={{ textAlign: 'center', color: '#333' }}>Bills</h2>
     <ul style={{ listStyleType: 'none', padding: 0 }}>
       {bills.map((bill) => (
         <li key={bill.uuid} style={{ ...listItemStyle, backgroundColor: '#f9f9f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

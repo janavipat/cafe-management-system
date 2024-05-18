@@ -1,0 +1,37 @@
+.floatingui {
+    position: fixed;
+    text-decoration: none;
+    bottom: 20px;
+    right: 20px; 
+    width: 200px;
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+    animation: floatAnimation 2s ease-in-out infinite alternate;
+    margin-top: 400px;
+    margin-left: 153px;
+    }
+    .message{
+      position: fixed;
+    text-decoration: none;
+    bottom: 20px;
+    right: 10px; 
+  
+    background-color: #f5ecec; 
+    color: rgb(12, 129, 32);
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+    animation: floatAnimation 2s ease-in-out infinite alternate;
+    margin-right: 50px;
+    }
+    @keyframes floatAnimation {
+    0% {
+    transform: translateY(0);
+    }
+    100% {
+    transform: translateY(-10px);
+    }
+  }

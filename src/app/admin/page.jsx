@@ -38,7 +38,7 @@ const AdminPage = () => {
   };
 
   if (!token || role !== 'admin') {
-    // If token or role is not valid, don't render AdminPage
+   
     return null;
   }
 

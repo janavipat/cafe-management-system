@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
+import "./style.css"
 import axios from 'axios';
 import {
   Button,
@@ -215,7 +216,6 @@ const [filteredProducts, setFilteredProducts] = useState([]);
   
   return (
     <div style={{ textAlign: 'center' }}>
-      <h1>Products</h1>
       <Dialog open={isEditDialogOpen} onClose={() => setIsEditDialogOpen(false)}>
   <DialogTitle>Edit Product</DialogTitle>
   <DialogContent>update product
@@ -322,21 +322,29 @@ const [filteredProducts, setFilteredProducts] = useState([]);
 </Dialog>
 
 
-      <Button
+      
+<TextField
+      label="search by name, price, category, description ....."
+      variant="outlined"
+      value={filter}
+      onChange={e => setFilter(e.target.value)}
+      sx={{
+        marginBottom: '20px',
+        width: '900px',
+        marginTop: '80px',
+        marginLeft: '10px',
+        boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',  // Applying the box shadow
+      }}
+    />
+       <Button
+       className='floatingui'
         variant="contained"
         onClick={() => setIsDialogOpen(true)}
-        style={{ backgroundColor: 'orange', color: 'white', marginBottom: '20px' }}
+        style={{ backgroundColor: 'orange', color: 'white', marginBottom: '20px', marginTop: '50px', marginLeft: '50px' } }
       >
         Add New Product
       </Button>
-      <TextField
-        label="Search"
-        variant="outlined"
-        style={{ marginBottom: '20px' }}
-        value={filter}
-        onChange={e => setFilter(e.target.value)}
-      />
-      <TableContainer component={Paper} style={{ display: 'inline-block', textAlign: 'left' }}>
+      <TableContainer component={Paper} style={{ display: 'inline-block', textAlign: 'left', marginLeft:"20px", marginRight:"20px", width:"1200px" }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -377,6 +385,7 @@ const [filteredProducts, setFilteredProducts] = useState([]);
 
         </Table>
       </TableContainer>
+      
     </div>
   );
 };

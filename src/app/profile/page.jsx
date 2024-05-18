@@ -1,6 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+
+import { TextField, Button } from "@mui/material";
 import Swal from "sweetalert2";
 import "./profile.css"; // Import CSS file for styling
 
@@ -9,6 +11,29 @@ function UserProfile() {
   const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
+  useEffect(() => {
+    // Check if token exists in localStorage or wherever it is stored
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .get("http://localhost:5000/user/checkToken", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          const { role } = res.data.message;
+          if (role===false) {
+            Swal.fire({
+              icon: "error",
+              title: "Unauthorized Access",
+              text: "You are not authorized to access this page.",
+            });
+          }
+        })
+    }
+  }, []);
 
   const updateProfile = () => {
     // Validation for contact number
@@ -77,16 +102,90 @@ function UserProfile() {
   };
 
   return (
-    <div className="user-form">
-      <h2>Update Profile</h2>
-      <form>
-        <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-        <input type="text" placeholder="Contact" value={contact} onChange={(e) => setContact(e.target.value)} />
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-       
-        <button type="button" onClick={updateProfile}>Update Profile</button>
-      </form>
+    <div className="page-content page-container" id="page-content">
+      <div className="padding">
+        <div className="row container d-flex justify-content-center">
+          <div className="col-xl-6 col-md-12">
+            <div className="card user-card-full">
+              <div className="row m-l-0 m-r-0">
+                <div className="col-sm-4 bg-c-lite-green user-profile">
+                  <div className="card-block text-center text-white">
+                    
+                    <h6 className="f-w-600">{name}</h6>
+                    <i className="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                  </div>
+                </div>
+                <div className="col-sm-8">
+                  <div className="card-block">
+                    <h6 className="m-b-20 p-b-5 b-b-default f-w-600 m-t-25">Information</h6>
+                    <div className="row">
+                      <div className="col-sm-6">
+                        <p className="m-b-10 f-w-600">Email</p>
+                        <TextField
+                          type="email"
+                          placeholder="Email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          fullWidth
+                          variant="outlined"
+                        />
+                      </div>
+                      <div className="col-sm-6">
+                        <p className="m-b-10 f-w-600">Phone</p>
+                        <TextField
+                          type="text"
+                          placeholder="Contact"
+                          value={contact}
+                          onChange={(e) => setContact(e.target.value)}
+                          fullWidth
+                          variant="outlined"
+                        />
+                      </div>
+                    </div>
+                    <h6 className="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">secure</h6>
+                    <div className="row">
+                      <div className="col-sm-6">
+                        <p className="m-b-10 f-w-600">Name</p>
+                        <TextField
+                          type="text"
+                          placeholder="Name"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          fullWidth
+                          variant="outlined"
+                        />
+                      </div>
+                      <div className="col-sm-6">
+                        <p className="m-b-10 f-w-600">Password</p>
+                        <TextField
+                          type="password"
+                          placeholder="Password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          fullWidth
+                          variant="outlined"
+                        />
+                      </div>
+                    </div>
+                    <ul className="">
+                      <li style={{marginRight:"-20px", height:"55px" , marginTop:"109px", width:"300px", marginLeft:"139px"}}>
+                        <Button
+                          variant="contained"
+                          sx={{ backgroundColor: "orange" }}
+                          onClick={updateProfile}
+                          fullWidth
+                        >
+                          Update Profile
+                        </Button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

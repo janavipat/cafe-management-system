@@ -52,8 +52,8 @@ const CartPage = () => {
   return (
     <>
       
-        <div>
-          <h2>Cart</h2>
+        <div className='cart-container'>
+        
           <table>
             <thead>
               <tr>
@@ -69,9 +69,9 @@ const CartPage = () => {
                   <td>{item.name}</td>
                   <td>${item.price}</td>
                   <td>
-                    <button onClick={() => handleDecreaseQuantity(index)}>-</button>
+                    <button onClick={() => handleDecreaseQuantity(index)} style={{marginRight:"30px"}}>-</button>
                     {item.quantity}
-                    <button onClick={() => handleIncreaseQuantity(index)}>+</button>
+                    <button onClick={() => handleIncreaseQuantity(index)} style={{marginLeft:"30px"}}>+</button>
                   </td>
                   <td>
                     <button onClick={() => handleDeleteItem(index)}>Delete</button>
@@ -81,8 +81,11 @@ const CartPage = () => {
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan="3"><strong>Total:</strong></td>
-                <td>${totalPrice}</td>
+                <td colSpan="3" ><strong>Total:</strong></td>
+                <td style={{ display:"flex", flexDirection:"row", textAlign:"center", border:"1px solid #ccc"}}>
+    <img src='../../assets/img/rupee.svg' alt='' width={20}/>
+    <span class="price">{totalPrice}</span>
+  </td>
               </tr>
               <tr>
                 <td colSpan="4">

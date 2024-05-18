@@ -179,7 +179,7 @@ const Dashboard = () => {
                     >
                       <div
                         className="max-auto bg-sky-30 rounded-xl shadow-lg p-4"
-                        style={{ display: "flex",marginLeft:"30px",height: "282px", }}
+                        style={{ display: "flex" }}
                       >
                         {/* Left side */}
                         <div

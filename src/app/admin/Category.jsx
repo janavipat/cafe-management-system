@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import "./style.css"
 import {
   Button,
   Dialog,
@@ -113,13 +114,18 @@ const CategoryPage = () => {
   };
   return (
     <div style={{ textAlign: 'center' }}>
-      <h1 style={{ color: 'orange' }}>Categories</h1>
       <TextField
-        label="Search Categories"
+        label="search by name, price, category, description ...."
         variant="outlined"
         value={searchTerm}
         onChange={handleSearch}
-        style={{ marginBottom: '20px' }}
+        sx={{
+          marginBottom: '20px',
+          width: '900px',
+          marginTop: '80px',
+          marginLeft: '10px',
+          boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',  // Applying the box shadow
+        }}
       />
 
       <Dialog open={isEditDialogOpen} onClose={() => setIsEditDialogOpen(false)}>
@@ -173,18 +179,19 @@ const CategoryPage = () => {
 
       <Button
         variant="contained"
+        className='floatingui'
         onClick={() => setIsDialogOpen(true)}
-        style={{ backgroundColor: 'orange', color: 'white', marginBottom: '20px' }}
+        style={{ backgroundColor: 'orange', color: 'white', marginBottom: '20px', marginTop: '50px', marginLeft: '50px' } }
       >
         Add New Category
       </Button>
 
-      <TableContainer component={Paper} style={{ display: 'inline-block', textAlign: 'left' }}>
+      <TableContainer component={Paper} style={{ display: 'inline-block', textAlign: 'left', marginLeft:"20px", marginRight:"20px", width:"1200px" }}>
         <Table>
           <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Actions</TableCell>
+            <TableRow >
+              <TableCell style={{paddingLeft:"400px"}}>Name</TableCell>
+              <TableCell style={{paddingLeft:"60px"}}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -194,8 +201,8 @@ const CategoryPage = () => {
               )
               .map((category) => (
               <TableRow key={category._id}>
-                <TableCell>{category.name}</TableCell>
-                <TableCell>
+                <TableCell style={{paddingLeft:"400px"}}>{category.name}</TableCell>
+                <TableCell >
                   <Button onClick={() => openEditDialog(category._id, category.name)}>
                     <EditIcon />
                   </Button>
