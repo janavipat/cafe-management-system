@@ -27,30 +27,26 @@
         </table>
         <h3>PRODUCT DETAILS:</h3>
         <table>
-        <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Quantity</th>
-            <th>price</th>
-            <th>sub Total</th>
-        </tr>
-        <% if(productdetails.length >0) { %>
-          <% productdetails.forEach(product =>{ %>
-        <tr>
-            <td><%= product.name %></td>
-            <td><%= product.category %></td>
-
-            <td><%= product.quantity %></td>
-
-            <td><%= product.price %></td>
-
-            <td><%= product.total %></td>
-
-        </tr>
-        <%}); %>
-        <%}%>
-    </table>
-    <h3>Total : <%= total %></h3>
-    <h3>Thank you for visiting please visit</h3>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Sub Total</th>
+            </tr>
+            <% if(productdetails) { %>
+                <% productdetails.forEach(product => { %>
+                    <tr>
+                        <td><%= product.name %></td>
+                        <td><%= product.category %></td>
+                        <td><%= product.quantity %></td>
+                        <td>$<%= product.price %></td>
+                        <td>$<%= (product.price * product.quantity) %></td>
+                    </tr>
+                <% }); %>
+            <% } %>
+        </table>
+        <h3>Total: $<%= total %></h3>
+        <h3>Thank you for visiting, please come again!</h3>
     </body>
 </html>

@@ -7,6 +7,7 @@ const productRoute = require('./routes/product');
 const billRoute= require("./routes/bill");
 const dashboardRoute = require("./routes/dashboard");
 const paymentIntentRoute = require("./routes/payment");
+const orderRoute = require("./routes/order");
 const app = express();
 app.use(cors());
 app.use(express.urlencoded({extended: true}));
@@ -17,5 +18,6 @@ app.use('/product', productRoute);
 app.use('/bill', billRoute);
 app.use('/dashboard', dashboardRoute);
 app.use('/payment',paymentIntentRoute);
+app.use('/order', orderRoute);
 
 module.exports = app;

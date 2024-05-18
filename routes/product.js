@@ -19,7 +19,8 @@ checkRole.checkRole, async (req, res) => {
         categoryId,
         description,
         price,
-        status
+        status,
+        quentity:1,
       });
   
       // Save the product to the database
@@ -66,20 +67,19 @@ checkRole.checkRole, async (req, res) => {
   router.put('/update/:id', async (req, res) => {
     const productId = req.params.id;
     const updates = req.body; // Fields to update
-  
     
     try {
-      const product = await Product.findByIdAndUpdate(productId, updates, { new: true });
-      
-      if (!product) {
-        return res.status(404).json({ message: 'Product not found' });
-      }
-      
-      return res.status(200).json(product);
+        const product = await Product.findByIdAndUpdate(productId, { $set: updates }, { new: true });
+        
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        
+        return res.status(200).json(product);
     } catch (err) {
-      return res.status(500).json({ error: err.message });
+        return res.status(500).json({ error: err.message });
     }
-  });
+});
   router.delete('/delete/:id', async (req, res) => {
     const productId = req.params.id;
     

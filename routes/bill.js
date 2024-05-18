@@ -14,7 +14,6 @@ const PDFParser = require('pdf-parse');
 router.post("/generateReport", auth.authenticateToken, checkRole.checkRole, async (req, res) => {
   const generateuid = uuid.v1();
   const orderdetails = req.body;
-  console.log(orderdetails)
   
   const productdetailsReport = JSON.parse(orderdetails.productdetails);
 
@@ -26,7 +25,7 @@ router.post("/generateReport", auth.authenticateToken, checkRole.checkRole, asyn
       contact: orderdetails.contact,
       paymentmethod: orderdetails.paymentmethod,
       total: orderdetails.total,
-      productdetails: orderdetails.productdetails,
+      productdetails: orderdetails.productDetails,
       createdBy: "admin@gmail.com",
     });
    
@@ -65,24 +64,24 @@ router.post("/generateReport", auth.authenticateToken, checkRole.checkRole, asyn
 });
 
 
-const generatePDF = async (generateuid, orderdetails) => {
-  console.log(orderdetails);
-  return new Promise((resolve, reject) => {
-      const productdetailsReport = JSON.parse(orderdetails.productdetails);
+const generatePDF = async (generateuid, orderdetails,productdetails) => {
+ 
 
-      ejs.renderFile(path.join(__dirname, '', "report.ejs"), {
+  console.log(productdetails);
+  return new Promise((resolve, reject) => {
+      ejs.renderFile(path.join(__dirname, '', 'report.ejs'), {
           name: orderdetails.name,
           email: orderdetails.email,
           contact: orderdetails.contact,
           paymentmethod: orderdetails.paymentmethod,
-          productdetails: productdetailsReport,
+          productdetails: orderdetails.productdetails,
           total: orderdetails.total,
       }, (err, html) => {
           if (err) {
               reject(err);
           }
           const options = { format: 'A4' };
-          pdf.create(html, options).toFile(path.join(__dirname, '', "../generated_pdf/" + generateuid + ".pdf"), (err, result) => {
+          pdf.create(html, options).toFile(path.join(__dirname, '', '../generated_pdf/' + generateuid + '.pdf'), (err, result) => {
               if (err) {
                   reject(err);
               }
@@ -93,36 +92,51 @@ const generatePDF = async (generateuid, orderdetails) => {
 };
 
 router.post('/getpdf', async (req, res) => {
-  try {
-    const { uuid, billData } = req.body;
-    console.log(uuid);
+  console.log(req.body.billData.productdetails);
 
-    const filePath = path.join(__dirname, '', uuid + ".pdf");
-    console.log(uuid + ".pdf", filePath);
 
-   
-  billData = JSON.parse(billData)
+  const filePath = path.join(__dirname, '', '../generated_pdf/' + req.body.uuid + '.pdf');
 
-    fs.access(filePath, fs.constants.F_OK, async (err) => {
+  fs.access(filePath, fs.constants.F_OK, async (err) => {
       if (err) {
-        if (!billData) {
-          return res.status(404).json({ error: 'Bill not found' });
-        }
-        await generatePDF(uuid, billData);
-        res.sendFile(filePath);
+          try {
+              // Generate a new PDF
+               new Promise((resolve, reject) => {
+                ejs.renderFile(path.join(__dirname, '', 'report.ejs'), {
+                    name: req.body.billData.name,
+                    email: req.body.billData.email,
+                    contact: req.body.billData.contact,
+                    paymentmethod: req.body.billData.paymentmethod,
+                    productdetails: req.body.billData.productdetails,
+                    total: req.body.billData.total,
+                }, (err, html) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    const options = { format: 'A4' };
+                    pdf.create(html, options).toFile(path.join(__dirname, '', '../generated_pdf/' + req.body.uuid + '.pdf'), (err, result) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve();
+                    });
+                });
+            });
+              
+              // Send the generated PDF file
+              res.sendFile(filePath);
+          } catch (err) {
+              console.error('Error generating PDF:', err);
+              res.status(500).json({ error: 'Failed to generate PDF' });
+          }
       } else {
-        const dataBuffer = fs.readFileSync(filePath);
-        const pdfData = await PDFParser(dataBuffer);
-        const pdfText = pdfData.text;
-        // Send the PDF content in the response body
-        res.status(200).send(pdfText);
+          // Send the existing PDF file
+          res.sendFile(filePath);
       }
-    });
-  } catch (error) {
-    console.error('Error downloading bill:', error);
-    return res.status(500).json({ error: error.message });
-  }
+  });
 });
+
+
 
 router.get("/getbills", auth.authenticateToken, async (req, res) => {
     try {

@@ -103,7 +103,7 @@ router.post("/forgot", async (req, res) => {
                 <p>Please click on the following link, or paste this into your browser to complete the process:</p>
                 <p><a href="${process.env.CLIENT_URL}/reset/${resetToken}">${process.env.CLIENT_URL}/reset/${resetToken}</a></p>
                 <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
-                <p><a href="http://localhost:4200/">Click here to login</a></p>`,
+                <p><a href="http://localhost:3000/login/reset">Click here to login</a></p>`,
     };
     // Send the email
     await transpoter.sendMail(mailOptions);
