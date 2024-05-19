@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 import './cart.css';
 
 
@@ -13,7 +14,7 @@ const CartPage = () => {
     const cartStorage = JSON.parse(localStorage.getItem('cart'));
     setCartItems(cartStorage || []);
     
-  }, [cartItems]);
+  }, []);
 
   const handleDeleteItem = (index) => {
     const updatedCart = [...cartItems];
@@ -38,12 +39,42 @@ const CartPage = () => {
     }
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     const token = localStorage.getItem('token');
-    if (token) {
-      router.push('/payment')
-    } else {
+    if (!token) {
       router.push('/login');
+      return;
+    }
+
+    // Assuming token is a JWT and contains user info in its payload
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    const name = decodedToken.name;
+    const email = decodedToken.email;
+    const contact = '1231231231'; // Fixed contact number
+
+    const orderDetails = {
+      name:"user",
+      email,
+      contact,
+      paymentmethod: "card",
+      total: cartItems.reduce((acc, curr) => acc + (curr.price * curr.quantity || 0), 0),
+      productdetails: JSON.stringify(cartItems)
+    };
+
+    try {
+      const response = await axios.post('http://localhost:5000/bill/generateReport', orderDetails, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.status === 200) {
+        router.push('/payment');
+      } else {
+        console.error('Failed to generate report', response.data);
+      }
+    } catch (error) {
+      console.error('Error generating report', error);
     }
   };
 

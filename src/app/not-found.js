@@ -1,30 +1,46 @@
-"use client"
+"use client";
 
 import React from "react";
+import Link from "next/link";
 
 function CustomError() {
   return (
     <section className="error-area sec-m">
       <div className="container">
         <div className="error-content">
-          <img src="../../assets/img/error.png" alt="Error Image" style={{marginLeft:"450px", marginTop:"70px"}} />
+          <img
+            src="../../assets/img/error.png"
+            alt="Error Image"
+            style={{ marginLeft: "450px", marginTop: "70px" }}
+          />
           <h2>Sorry, we can’t find that page</h2>
           <p>
             The page you are looking for may have been moved, removed, renamed,
             or never existed.
           </p>
           <div className="cmn-btn">
-            <a href="/">
-              <a className="btn" style={{backgroundColor:"green", color:"white", fontSize:"25px", fontWeight:"700"}}>Back to Home</a>
-            </a>
+            
+              <a
+              href="/"
+                className="btn"
+                style={{
+                  backgroundColor: "green",
+                  color: "white",
+                  fontSize: "25px",
+                  fontWeight: "700",
+                }}
+              >
+                Back to Home
+              </a>
           </div>
         </div>
       </div>
       <style jsx>{`
         .error-area {
-          background: url('https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvdjU0NmJhdGNoMy1teW50LTM0LWJhZGdld2F0ZXJjb2xvcl8xLmpwZw.jpg') center center no-repeat;
+          background: url('https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvdjU0NmJhdGNoMy1teW50LTM0LWJhZGdld2F0ZXJjb2xvcl8xLmpwZw.jpg')
+            center center no-repeat;
           background-size: cover;
-         height:770px;
+          height: 770px;
           padding: 100px 0;
           color: #fff; /* Adjusting text color */
         }
