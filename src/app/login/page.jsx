@@ -3,8 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import "./login.css";
-import ForgotPassword from './forgot/page';
-
+import Swal from 'sweetalert2';
 export default function AuthComponent() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
@@ -36,7 +35,12 @@ export default function AuthComponent() {
         if (email === 'admin@gmail.com' && password === 'admin@123') {
           router.push('/admin'); 
         } else {
-          console.log('Login successful');
+          Swal.fire({
+            title: "Login Successfull!",
+            text: "Thank you fro Login!",
+            icon: "success"
+          });
+          router.push("/")
         }
       } else {
         setErrorMessage(responseData.error);
@@ -97,7 +101,7 @@ export default function AuthComponent() {
           <p className="forgot-pass" onClick={ForgotPassword} style={{color:"red", fontSize:"15px", marginTop:"50px"}}>Forgot password?</p>
           <button type="submit" className="submit">Sign In</button>
         </form>
-        {errorMessage && <p className="error">{errorMessage}</p>}
+        {errorMessage && <p className="error" style={{color:"red", fontSize:'20px', fontWeight:"600", textAlign:"center"}}>{errorMessage}</p>}
       </div>
       <div className="sub-cont">
         <div className="img">
@@ -118,19 +122,19 @@ export default function AuthComponent() {
             <label>
               <span>Name</span>
               <input type="text" {...register('name', { required: true, pattern: /^[A-Za-z]+$/ })} className="input-field" />
-              {errors.name && <span className="error">Name is required and should contain only letters</span>}
+              {errors.name && <span className="error" style={{color:"red", fontSize:'20px', fontWeight:"600", textAlign:"center"}}>Name is required and should contain only letters</span>}
             </label>
             <label>
               <span>Email</span>
               <input type="email" {...register('email', { required: true, pattern: /^\S+@\S+$/i })} className="input-field" />
-              {errors.email && <span className="error">Email is required and must be valid</span>}
+              {errors.email && <span className="error" style={{color:"red", fontSize:'20px', fontWeight:"600", textAlign:"center"}}>Email is required and must be valid</span>}
             </label>
             <label>
               <span>Password</span>
               <input type="password" {...register('password', { required: true, minLength: 8, maxLength: 15 })} className="input-field" />
-              {errors.password && errors.password.type === 'required' && <span className="error">Password is required</span>}
-              {errors.password && errors.password.type === 'minLength' && <span className="error">Password must be at least 8 characters long</span>}
-              {errors.password && errors.password.type === 'maxLength' && <span className="error">Password cannot exceed 15 characters</span>}
+              {errors.password && errors.password.type === 'required' && <span className="error" style={{color:"red", fontSize:'20px', fontWeight:"600", textAlign:"center"}}>Password is required</span>}
+              {errors.password && errors.password.type === 'minLength' && <span className="error" style={{color:"red", fontSize:'20px', fontWeight:"600", textAlign:"center"}}>Password must be at least 8 characters long</span>}
+              {errors.password && errors.password.type === 'maxLength' && <span className="error" style={{color:"red", fontSize:'20px', fontWeight:"600", textAlign:"center"}}>Password cannot exceed 15 characters</span>}
             </label>
             <label>
               <span>Contact</span>
@@ -139,8 +143,8 @@ export default function AuthComponent() {
             </label>
             <button type="submit" className="submit">Sign Up</button>
           </form>
-          {errorMessage && <p className="error">{errorMessage}</p>}
-          {successMessage && <p className="success">{successMessage}</p>}
+          {errorMessage && <p className="error" style={{color:"red", fontSize:'20px', fontWeight:"600", textAlign:"center"}}>{errorMessage}</p>}
+          {successMessage && <p className="success" style={{color:"green", fontSize:'20px', fontWeight:"600", textAlign:"center"}}>{successMessage}</p>}
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
 import Product from './Product';
 import Category from './Category';
+import User from './User';
 import Bill from './Bill';
 import Swal from 'sweetalert2';
 import { jwtDecode } from 'jwt-decode'
@@ -56,6 +57,7 @@ const AdminPage = () => {
         {activeTab === 'Product' && <Product />}
         {activeTab === 'Category' && <Category />}
         {activeTab === 'bill' && <Bill />}
+        {activeTab === 'user' && <User />}
       </div>
     </div>
   );

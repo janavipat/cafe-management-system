@@ -31,8 +31,15 @@ const Sidebar = ({ activeTab, onTabClick }) => {
         style={{ padding: '10px 0', cursor: 'pointer', display: 'flex', alignItems: 'center', backgroundColor: activeTab === 'bill' ? 'orange' : '',borderRadius:"10px" }}
         onClick={() => onTabClick('bill')}
       >
-        <img src="../../assets/img/category.svg" alt="Manage Category" style={{ width: '20px', height: '20px', marginRight: '10px', marginLeft:"10px" }} />
+        <img src="../../assets/img/bill.svg" alt="Manage Category" style={{ width: '20px', height: '20px', marginRight: '10px', marginLeft:"10px" }} />
         bill
+      </div>
+      <div
+        style={{ padding: '10px 0', cursor: 'pointer', display: 'flex', alignItems: 'center', backgroundColor: activeTab === 'user' ? 'orange' : '',borderRadius:"10px" }}
+        onClick={() => onTabClick('user')}
+      >
+        <img src="../../assets/img/prof.svg" alt="user" style={{ width: '20px', height: '20px', marginRight: '10px', marginLeft:"10px" }} />
+        User
       </div>
     </div>
   );
