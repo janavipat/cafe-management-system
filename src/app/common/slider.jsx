@@ -74,11 +74,10 @@ function CreativeService() {
               data-wow-duration="1500ms"
             >
               <div className="title-left">
-                <span>Category</span>
-                <h2>See All Creative Services</h2>
+                <span style={{fontSize:"25px", color:"orange", fontWeight:"700"}}>Category</span>
+                <h2 style={{fontSize:"25px", color:"black", fontWeight:"700"}}>See All Creative Services</h2><br/><br />
               </div>
               <div className="title-right">
-                <strong>Category</strong>
               </div>
             </div>
           </div>

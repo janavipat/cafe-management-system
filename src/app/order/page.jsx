@@ -2,9 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import RupeeIcon from '@mui/icons-material/AttachMoney';
-
+import Custompaggin from "../common/Custompaggin"
 import IconButton from "@mui/material/IconButton";
-import { red } from "@mui/material/colors";
 import TextField from "@mui/material/TextField";
 import Pagination from "@mui/material/Pagination";
 import Header from "../common/header";
@@ -66,7 +65,7 @@ export default function RecipeReviewCard() {
   const [category, setCategory] = useState("");
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState("");
-  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const { selectedProduct } = useProduct();
 
@@ -74,7 +73,7 @@ export default function RecipeReviewCard() {
     selectedProduct ? setProductName(selectedProduct): setProductName(productName);
 
     fetchProducts();
-  }, []);
+  }, [currentPage]);
 
   const fetchProducts = async () => {
     try {
@@ -83,13 +82,14 @@ export default function RecipeReviewCard() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ categoryName: category, productName, price, page, limit: 9 }),
+        body: JSON.stringify({ categoryName: category, productName, price, currentPage, limit: 8 }),
       });
       if (!response.ok) {
         throw new Error("Failed to fetch products");
       }
       const data = await response.json();
-      setProducts(data);
+      
+      setProducts(data.products);
       setTotalPages(data.totalPages);
     } catch (error) {
       console.error("Error fetching products:", error.message);
@@ -106,11 +106,13 @@ export default function RecipeReviewCard() {
  
 
   const handleFilter = () => {
-    setPage(1);
     fetchProducts();
   };
-
-
+ 
+  const handlePaginationClick = (page) => {
+    setCurrentPage(page);
+    fetchProducts();
+  };
   return (
     <>
       <Header Cart={cart} />
@@ -189,15 +191,16 @@ export default function RecipeReviewCard() {
           </Grid>
         ))}
       </Grid>
+      <Custompaggin
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePaginationClick={handlePaginationClick}
+        />
     </Box>
 
 
     
-      <StyledPagination
-        count={totalPages}
-        page={page}
-        onChange={(event, value) => setPage(value)}
-      />
+   
     </>
   );
 }
