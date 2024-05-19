@@ -1,6 +1,6 @@
 import "./globals.scss";
-import Headers from "../app/common/header";
-import { CartProvider } from "../context/cart_context";
+import { ProductProvider } from '../context/Mycontext';
+
 
 export const metadata = {
   title: "Create Next App",
@@ -11,12 +11,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+      <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
       </head>
       <body>
-        <CartProvider>
+        <ProductProvider>
        
           {children}
-        </CartProvider>
+        </ProductProvider>
       </body>
     </html>
   );

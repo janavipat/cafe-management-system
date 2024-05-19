@@ -7,6 +7,7 @@ import Gallery from './common/Gallary';
 import Whychooseus from "./common/Whychooseus"
 import Cook from './common/Cookwithus';
 import MultipleItems from "./common/Expert"
+import CreativeService from './common/slider';
 
 const IndexPage = () => {
 return(
@@ -98,6 +99,7 @@ return(
   </div>
 </section>
 <Cook />
+<CreativeService />
 <MultipleItems />
 <Whychooseus />
 <Gallery />

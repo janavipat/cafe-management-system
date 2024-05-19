@@ -8,6 +8,7 @@ import { red } from "@mui/material/colors";
 import TextField from "@mui/material/TextField";
 import Pagination from "@mui/material/Pagination";
 import Header from "../common/header";
+import { useProduct } from "@/context/Mycontext";
 import { Grid, Card, CardHeader, CardMedia, CardContent, CardActions, Typography, Button, Box } from '@mui/material';
 
 
@@ -60,14 +61,18 @@ const StyledPagination = styled(Pagination)({
 export default function RecipeReviewCard() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState();
+  
 
   const [category, setCategory] = useState("");
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const { selectedProduct } = useProduct();
 
   useEffect(() => {
+    selectedProduct ? setProductName(selectedProduct): setProductName(productName);
+
     fetchProducts();
   }, []);
 
