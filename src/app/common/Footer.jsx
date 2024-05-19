@@ -1,99 +1,164 @@
 import Link from "next/link";
-import Image from "next/image";
+import React from "react";
+import { useProduct } from "../../context/Mycontext";
 
 const socialLinks = [
-    {
-        imgSrc: '../../assets/img/Footer/facebook.svg',
-        link: 'https://facebook.com',
-        width: 10
-    },
-    {
-        imgSrc: '../../assets/img/Footer/insta.svg',
-        link: 'https://instagram.com',
-        width: 14
-    },
-    {
-        imgSrc: '../../assets/img/Footer/twitter.svg',
-        link: 'https://twitter.com',
-        width: 14
-    }
-];
-
-const products = [
-    {
-        id: 1,
-        section: "Company",
-        link: ['About', 'Careers', 'Mobile', 'Blog', 'How we work?'],
-    },
-    {
-        id: 2,
-        section: "Contact",
-        link: ['Help/FAQ', 'Press', 'Affiliates', 'Hotel owners', 'Partners']
-    },
-    {
-        id: 3,
-        section: "More",
-        link: ['Recipe', 'Chef', 'Food', 'Support']
-    }
+  {
+    imgSrc: '../../assets/img/Footer/facebook.svg',
+    link: 'https://facebook.com',
+    iconClass: 'fab fa-facebook-f'
+  },
+  {
+    imgSrc: '../../assets/img/Footer/insta.svg',
+    link: 'https://instagram.com',
+    iconClass: 'fab fa-instagram'
+  },
+  {
+    imgSrc: '../../assets/img/Footer/twitter.svg',
+    link: 'https://twitter.com',
+    iconClass: 'fab fa-twitter'
+  }
 ];
 
 const Footer = () => {
-    return (
-        <div className="mx-auto max-w-2xl pt-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-            <div className="my-12 grid grid-cols-1 gap-y-10 sm:grid-cols-6 lg:grid-cols-12">
+  const { setSelectedProduct } = useProduct();
 
-                {/* COLUMN-1 */}
+  const handleService = (category) => {
+    setSelectedProduct(category);
+  };
 
-                <div className='sm:col-span-6 lg:col-span-5'>
-                    <div className="flex flex-shrink-0 items-center border-right">
-                        <img src="../../assets/img/cafe.png" alt="logo" width={56} height={56} />
-                        <Link href="/" className='text-2xl font-semibold text-black ml-4'>
-                            Coffee with us.
-                        </Link>
-                    </div>
-                    <h3 className='text-textbl text-xs font-medium mt-5 mb-4 lg:mb-16'> Open an account in minutes, get full financial <br /> control for much longer.</h3>
-                    <div className='flex gap-4'>
+  return (
+    <footer style={{ backgroundColor: '#1a1a1a', color: '#fff', padding: '40px 0' }}>
+      <div className="container" style={{ maxWidth: '1140px', margin: '0 auto' }}>
+        <div className="footer-top" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'start', margintop:"100px" }}>
+          <div className="footer-widget" style={{ width: '100%', maxWidth: '25%', marginBottom: '20px', marginLeft:"-176px", marginRight:"120px" }}>
+          <Link href="/" legacyBehavior>
+  <a style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+    <img src="../../assets/img/logo.jpg" alt="logo" style={{ height: '40px', marginRight: '10px' }} />
+    <span style={{ marginLeft: '10px', color:"orange", fontWeight:"700", fontSize:"25px" }}>COFFEE WITH US</span>
+  </a>
+</Link>
 
-                        {socialLinks.map((items, i) => (
-                            <Link href={items.link} key={i}>
-                                <div className="bg-white h-10 w-10 shadow-xl text-base rounded-full flex items-center justify-center footer-icons hover:bg-pink">
-                                    <img src={items.imgSrc} alt={items.imgSrc} width={items.width} height={2} className="sepiaa" />
-                                </div>
-                            </Link>
-                        ))}
-
-                    </div>
-                </div>
-
-                {/* CLOUMN-2/3/4 */}
-
-                {products.map((product) => (
-                    <div key={product.id} className="sm:col-span-2">
-                        <p className="text-black text-xl font-semibold mb-9">{product.section}</p>
-                        <ul>
-                            {product.link.map((link, index) => (
-                                <li key={index} className='mb-5'>
-                                    <Link href="/" className="text-footerlinks text-base font-normal mb-6 space-links">{link}</Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
-
+            <p style={{ marginBottom: '20px', fontSize:"18px", fontWeight:"500" }}>
+            Life begins after coffee, in the cozy embrace of a cafe's ambiance, where stories are shared and dreams take flight:
+            </p>
+            <div className="request-btn" onClick={() => handleService("")} style={{ cursor: 'pointer', marginBottom: '20px' }}>
+              <Link href="/order" legacyBehavior>
+                <a style={{ textDecoration: 'none', color: '#fff', backgroundColor: 'orange', padding: '10px 20px', borderRadius: '5px' }}>Request a Service</a>
+              </Link>
             </div>
-
-            {/* All Rights Reserved */}
-
-            <div className='py-10 md:flex items-center justify-between border-t border-t-bordertop'>
-                <h4 className='text-darkgrey text-sm text-center md:text-start font-normal'>@2023 - Chef&apos;s kitchen. All Rights Reserved by <Link href="https://adminmart.com/" target="_blank"> Adminmart.com</Link></h4>
-                <div className="flex gap-5 mt-5 md:mt-0 justify-center md:justify-start">
-                    <h4 className='text-darkgrey text-sm font-normal'><Link href="/" target="_blank">Privacy policy</Link></h4>
-                    <div className="h-5 bg-bordertop w-0.5"></div>
-                    <h4 className='text-darkgrey text-sm font-normal'><Link href="/" target="_blank">Terms & conditions</Link></h4>
+          </div>
+          <div className="footer-widget" style={{ width: '100%', maxWidth: '20%', marginBottom: '20px' }}>
+            <h4 style={{ marginBottom: '20px' , color:"orange", fontSize:"20px", fontWeight:"700" }}>Explore On</h4>
+            <hr style={{ borderTop: '1px solid #444', margin: '40px 0' }} />
+            <ul className="footer-menu" style={{ listStyle: 'none', padding: '0' }}>
+              <li style={{ marginBottom: '10px' }}>
+                <Link href="/" legacyBehavior>
+                  <a style={{ textDecoration: 'none', color: '#fff' }}>Home</a>
+                </Link>
+              </li>
+              <li style={{ marginBottom: '10px' }}>
+                <Link href="/about" legacyBehavior>
+                  <a style={{ textDecoration: 'none', color: '#fff' }}>About Us</a>
+                </Link>
+              </li>
+              <li style={{ marginBottom: '10px' }}>
+                <Link href="/order" legacyBehavior>
+                  <a style={{ textDecoration: 'none', color: '#fff' }}>Order</a>
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="footer-widget" style={{ width: '100%', maxWidth: '20%', marginBottom: '20px' }}>
+            <h4 style={{ marginBottom: '20px' , color:"orange", fontSize:"20px", fontWeight:"700" }}>Categories</h4>
+            <hr style={{ borderTop: '1px solid #444', margin: '40px 0' }} />
+            <ul className="footer-menu" style={{ listStyle: 'none', padding: '0' }}>
+              <li style={{ marginBottom: '10px' }} onClick={() => handleService("Cortado")}>
+                <Link href="/order" legacyBehavior>
+                  <a style={{ textDecoration: 'none', color: '#fff' }}>Cortado</a>
+                </Link>
+              </li>
+              <li style={{ marginBottom: '10px' }} onClick={() => handleService("Espresso")}>
+                <Link href="/order" legacyBehavior>
+                  <a style={{ textDecoration: 'none', color: '#fff' }}>Espresso</a>
+                </Link>
+              </li>
+              <li style={{ marginBottom: '10px' }} onClick={() => handleService("Cappuccino")}>
+                <Link href="/order" legacyBehavior>
+                  <a style={{ textDecoration: 'none', color: '#fff' }}>Cappuccino</a>
+                </Link>
+              </li>
+              <li style={{ marginBottom: '10px' }} onClick={() => handleService("Americano")}>
+                <Link href="/order" legacyBehavior>
+                  <a style={{ textDecoration: 'none', color: '#fff' }}>Americano</a>
+                </Link>
+              </li>
+              <li style={{ marginBottom: '10px' }} onClick={() => handleService("Coffee")}>
+                <Link href="/order" legacyBehavior>
+                  <a style={{ textDecoration: 'none', color: '#fff' }}>Coffee</a>
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="footer-widget" style={{ width: '100%', maxWidth: '30%', marginBottom: '20px'}}>
+            <h4 style={{ marginBottom: '20px', color:"orange", fontSize:"20px", fontWeight:"700"  }}>Contacts</h4>
+            <hr style={{ borderTop: '1px solid #444', margin: '40px 0' }} />
+            <div className="information" style={{ color: '#fff' }}>
+              <div className="info" style={{ marginBottom: '20px' }}>
+                <div className="icon" style={{ display: 'inline-block', width: '30px', marginRight:"30px" }}>
+                    <img src="../../assets/img/phone.svg" alt="phone"  style={{marginRight:"40px"}}/>
                 </div>
+                <div className="desc" style={{ display: 'inline-block' }}>
+                  <a href="tel:+917833445323" style={{ textDecoration: 'none', color: '#fff', display: 'block' }}>+91 7833445323</a>
+                  <a href="tel:+917833445323" style={{ textDecoration: 'none', color: '#fff', display: 'block' }}>+91 7833445323</a>
+                </div>
+              </div>
+              <div className="info" style={{ marginBottom: '20px' }}>
+                <div className="icon" style={{ display: 'inline-block', width: '30px',  marginRight:"30px" }}>
+                 <img src="../../assets/img/gmail.svg" alt="" style={{marginRight:"40px"}} />
+                </div>
+                <div className="desc" style={{ display: 'inline-block' }}>
+                  <a href="mailto:info@example.com" style={{ textDecoration: 'none', color: '#fff', display: 'block' }}>info@example.com</a>
+                  <a href="mailto:info@support.com" style={{ textDecoration: 'none', color: '#fff', display: 'block' }}>info@support.com</a>
+                </div>
+              </div>
+              <div className="info" style={{ marginBottom: '20px' }}>
+                <div className="icon" style={{ display: 'inline-block', width: '30px', marginRight:"30px" }}>
+                <img src="../../assets/img/address.svg" alt="" style={{marginRight:"40px"}}/>
+
+                </div>
+                <div className="desc" style={{ display: 'inline-block' }}>
+                  <p style={{ margin: '0' }}>Surat, Gujarat, India, 390001</p>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    );
+        <hr style={{ borderTop: '1px solid #444', margin: '40px 0' }} />
+        <div className="footer-bottom" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div className="copy-right" style={{ fontSize: '15px' }}>
+            <span>
+              Copyright 2023 WorkDeal | Developed By{" "}
+              <a href="https://github.com/janavipat" style={{ paddingLeft: '10px', fontSize: '16px', textDecoration: 'none', color: 'orange' }}>
+                Janavi Patel
+              </a>
+            </span>
+          </div>
+          <div className="footer-social-media">
+            <ul style={{ display: 'flex', listStyle: 'none', padding: '0', margin: '0' }}>
+              {socialLinks.map((link, index) => (
+                <li key={index} style={{ marginLeft: index !== 0 ? '20px' : '0' }}>
+                  <a href={link.link} target="_blank" rel="noopener noreferrer" style={{ color: '#fff', fontSize: '20px' }}>
+                  <img src={link.imgSrc} alt="" style={{backgroundColor: "white", color:"orange", width:"50px", height:"50px", borderRadius:"40px", boxShadow:"0 0 10px rgba(255, 255, 255, 0.5)"}} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
 };
 
 export default Footer;
