@@ -6,9 +6,9 @@ import "./dashboard.css";
 
 const Dashboard = () => {
   const [counts, setCounts] = useState({
-    categoryCount: "Loading...",
-    billCount: "Loading...",
-    productCount: "Loading...",
+    categoryCount: 0,
+    billCount: 0,
+    productCount: 0,
   });
 
   useEffect(() => {

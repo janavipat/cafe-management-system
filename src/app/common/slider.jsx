@@ -1,14 +1,14 @@
 import React, { useMemo } from "react";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useProduct } from "../../context/Mycontext"; // Import your context hook
+import { useProduct } from "../../context/Mycontext"; 
 import { useRouter } from "next/navigation";
 import "./CreativeService.css";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 function CreativeService() {
-  const { setSelectedProduct } = useProduct(); // Destructure the context hook to set product value
+  const { setSelectedProduct } = useProduct(); 
   const router = useRouter();
 
   const images = [
@@ -19,7 +19,7 @@ function CreativeService() {
     { src: "../../assets/img/Cortado.jpg", name: "Cortado" },
     { src: "../../assets/img/Café au lait.jpg", name: "Café au lait" },
     { src: "../../assets/img/cafe.png", name: "coffee" },
-    // Add more images as needed
+    
   ];
 
   const slider = useMemo(() => {
