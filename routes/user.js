@@ -122,16 +122,29 @@ router.get(
   async (req, res) => {
     try {
       const userRole = "user";
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 8;
+      const skip = (page - 1) * limit;
 
-      const userData = await Userdata.find({ role: userRole });
+      const userData = await Userdata.find({ role: userRole })
+        .skip(skip)
+        .limit(limit);
 
-      res.status(200).json(userData);
+      const totalUsers = await Userdata.countDocuments({ role: userRole });
+
+      res.status(200).json({
+        data: userData,
+        total: totalUsers,
+        page: page,
+        totalPages: Math.ceil(totalUsers / limit),
+      });
     } catch (error) {
       console.error("Error:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   }
 );
+
 
 router.put(
   "/users/:userId/status",

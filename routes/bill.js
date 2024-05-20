@@ -64,7 +64,7 @@ router.post("/generateReport", auth.authenticateToken, checkRole.checkRole, asyn
 });
 
 
-const generatePDF = async (generateuid, orderdetails,productdetails) => {
+const generatePDF = async (generateuid, orderdetails) => {
  
 
   console.log(productdetails);
@@ -74,7 +74,7 @@ const generatePDF = async (generateuid, orderdetails,productdetails) => {
           email: orderdetails.email,
           contact: orderdetails.contact,
           paymentmethod: orderdetails.paymentmethod,
-          productdetails: orderdetails.productdetails,
+          productdetails: JSON.parse(req.body.productdetails),
           total: orderdetails.total,
       }, (err, html) => {
           if (err) {
@@ -91,51 +91,55 @@ const generatePDF = async (generateuid, orderdetails,productdetails) => {
   });
 };
 
+
+async function getOrderDetailsByUUID(uuid) {
+  try {
+    const order = await Bill.findOne({ uuid: uuid }).exec();
+    return order;
+  } catch (err) {
+    throw new Error('Error fetching order details');
+  }
+}
 router.post('/getpdf', async (req, res) => {
-  console.log(req.body.billData.productdetails);
+  const generateuid = req.body.uuid;
 
+  try {
+    const orderdetails = await getOrderDetailsByUUID(generateuid);
 
-  const filePath = path.join(__dirname, '', '../generated_pdf/' + req.body.uuid + '.pdf');
+    if (!orderdetails) {
+      return res.status(404).json({ error: 'Order details not found' });
+    }
 
-  fs.access(filePath, fs.constants.F_OK, async (err) => {
-      if (err) {
-          try {
-              // Generate a new PDF
-               new Promise((resolve, reject) => {
-                ejs.renderFile(path.join(__dirname, '', 'report.ejs'), {
-                    name: req.body.billData.name,
-                    email: req.body.billData.email,
-                    contact: req.body.billData.contact,
-                    paymentmethod: req.body.billData.paymentmethod,
-                    productdetails: req.body.billData.productdetails,
-                    total: req.body.billData.total,
-                }, (err, html) => {
-                    if (err) {
-                        reject(err);
-                    }
-                    const options = { format: 'A4' };
-                    pdf.create(html, options).toFile(path.join(__dirname, '', '../generated_pdf/' + req.body.uuid + '.pdf'), (err, result) => {
-                        if (err) {
-                            reject(err);
-                        }
-                        resolve();
-                    });
-                });
-            });
-              
-              // Send the generated PDF file
-              res.sendFile(filePath);
-          } catch (err) {
-              console.error('Error generating PDF:', err);
-              res.status(500).json({ error: 'Failed to generate PDF' });
+    ejs.renderFile(
+      path.join(__dirname, "report.ejs"),
+      {
+        name: orderdetails.name,
+        email: orderdetails.email,
+        contact: orderdetails.contact,
+        paymentmethod: orderdetails.paymentmethod,
+        productdetails: JSON.parse(orderdetails.productdetails),
+        total: orderdetails.total,
+      },
+      (err, html) => {
+        if (err) {
+          return res.status(500).json({ error: err.message });
+        }
+        const options = { format: "A4" };
+        pdf.create(html, options).toFile(
+          path.join(__dirname, "../generated_pdf/", `${generateuid}.pdf`),
+          (err, result) => {
+            if (err) {
+              return res.status(500).json({ error: err.message });
+            }
+            return res.status(200).json({ uuid: generateuid });
           }
-      } else {
-          // Send the existing PDF file
-          res.sendFile(filePath);
+        );
       }
-  });
+    );
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
 });
-
 
 
 router.get("/getbills", auth.authenticateToken, async (req, res) => {
