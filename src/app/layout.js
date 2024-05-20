@@ -1,8 +1,6 @@
-import { Inter } from "next/font/google";
 import "./globals.scss";
-import Headers from "../app/common/header";
+import { ProductProvider } from '../context/Mycontext';
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -12,9 +10,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Headers />
-        {children}</body>
+      <head>
+      <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+      </head>
+      <body>
+        <ProductProvider>
+       
+          {children}
+        </ProductProvider>
+      </body>
     </html>
   );
 }

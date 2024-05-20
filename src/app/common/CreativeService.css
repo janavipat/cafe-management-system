@@ -1,0 +1,55 @@
+/* CreativeService.css */
+
+/* Ensure all slides are in one row */
+.swiper-slide {
+  width: auto !important; /* Ensure each slide takes only the space it needs */
+}
+
+.swiper-wrapper {
+  display: flex; /* Display slides in a row */
+  flex-wrap: nowrap; /* Ensure slides don't wrap to the next line */
+}
+
+.creative-service-slider {
+  overflow: hidden; /* Hide overflow to prevent scrollbars */
+}
+
+  /* Style for the image container */
+  .thumb {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+  /* Style for the rounded image */
+  .thumb img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* Hover effect for the image */
+  .thumb:hover img {
+    transform: scale(1.1);
+    width: 40px; height: 40px;
+  }
+  
+  /* Style for the inner content */
+  .cre-service-inner {
+    position: absolute;
+    width: 200px;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+  
+  /* Style for the name text */
+  .cre-service-inner strong {
+    font-size: 25px;
+    font-weight: bold;
+    color: #333;
+    margin-left: 20px;
+  }
+  
