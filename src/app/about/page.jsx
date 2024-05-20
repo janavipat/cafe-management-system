@@ -3,6 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import Header from '../common/Header';
 import { Fade } from 'react-awesome-reveal';
+import Footer from '../common/Footer';
 
 const cardData = [
     {
@@ -167,6 +168,8 @@ const AboutUsPage = () => {
                     color: #333;
                 }
             `}</style>
+
+            <Footer />
         </>
     );
 }

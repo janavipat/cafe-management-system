@@ -46,6 +46,7 @@ const CategoryPage = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(res.data)
       setCategories(res.data);
     } catch (error) {
       console.error('Error fetching categories:', error);

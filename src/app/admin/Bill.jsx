@@ -71,12 +71,16 @@ const IndexPage = () => {
   }, []);
 
   const addProduct = () => {
-    setProducts([...products, { id: products.length + 1, name: '', category: '', quantity: 0, price: 0 }]);
+    setProducts([
+      ...products,
+      { id: products.length + 1, name: '', category: '', quantity: 1, price: 0 }
+    ]);
   };
   const updateProduct = (index, field, value) => {
     const updatedProducts = [...products];
     updatedProducts[index][field] = value;
     setProducts(updatedProducts);
+    console.log(products)
     calculateTotal(updatedProducts);
   };
 
@@ -89,6 +93,8 @@ const IndexPage = () => {
   };
 
   const generateBill = async () => {
+
+    console.log(products)
     try {
       const response = await axios.post('http://localhost:5000/bill/generateReport', {
         name,
@@ -127,10 +133,12 @@ const IndexPage = () => {
     }
   };
 
-  const downloadBill = async (uuid, billData) => {
+  const downloadBill = async (uuid, billData, products) => {
     console.log(billData.productdetails)
+    console.log(products)
+    
     try {
-      const response = await axios.post('http://localhost:5000/bill/getpdf', { uuid, billData }, {
+      const response = await axios.post('http://localhost:5000/bill/getpdf', { uuid, billData, productdetails: JSON.stringify(products) }, {
         responseType: 'blob',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -213,8 +221,8 @@ const IndexPage = () => {
             <span style={{ marginLeft: '100px' }}>{bill.contact}</span>
           </div>
           <div>
-            <button style={{ ...buttonStyle, backgroundColor: '#007bff' }} onClick={() => downloadBill(bill.uuid, bill)}><CloudDownloadIcon /></button>
-            <button style={{ ...buttonStyle, backgroundColor: '#dc3545', marginLeft:"30px" }} onClick={() => deleteBill(bill.id)}><DeleteIcon /></button>
+            <button style={{ ...buttonStyle, backgroundColor: '#007bff' }} onClick={() => downloadBill(bill.uuid, bill, bill.productdetails)}><CloudDownloadIcon /></button>
+            <button style={{ ...buttonStyle, backgroundColor: '#dc3545', marginLeft:"30px" }} onClick={() => deleteBill(bill._id)}><DeleteIcon /></button>
           </div>
         </li>
       ))}

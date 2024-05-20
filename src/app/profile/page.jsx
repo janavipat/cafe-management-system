@@ -5,6 +5,8 @@ import axios from "axios";
 import { TextField, Button } from "@mui/material";
 import Swal from "sweetalert2";
 import "./profile.css"; // Import CSS file for styling
+import Footer from "../common/Footer";
+import Header from "../common/header";
 
 function UserProfile() {
   const [name, setName] = useState("");
@@ -102,6 +104,8 @@ function UserProfile() {
   };
 
   return (
+   <>
+   <Header />
     <div className="page-content page-container" id="page-content">
       <div className="padding">
         <div className="row container d-flex justify-content-center">
@@ -187,6 +191,8 @@ function UserProfile() {
         </div>
       </div>
     </div>
+    <Footer />
+   </>
   );
 }
 
