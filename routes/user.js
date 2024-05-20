@@ -145,7 +145,6 @@ router.get(
   }
 );
 
-
 router.put(
   "/users/:userId/status",
   auth.authenticateToken,
@@ -215,7 +214,6 @@ router.put("/changepassword", auth.authenticateToken, async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 router.post("/user/update-profile", auth.authenticateToken, (req, res) => {
   // Validate if the provided email matches the email associated with the token

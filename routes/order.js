@@ -4,7 +4,6 @@ const Product = require("../models/product");
 const Category = require("../models/category");
 require("dotenv").config();
 
-
 router.post("/products", async (req, res) => {
   try {
     let filters = { status: true };
@@ -24,7 +23,7 @@ router.post("/products", async (req, res) => {
     if (req.body.price) {
       filters.price = req.body.price;
     }
-  console.log(req.body)
+    console.log(req.body);
     const page = parseInt(req.body.currentPage) || 1;
     const limit = parseInt(req.body.limit) || 10;
     const skip = (page - 1) * limit;
@@ -37,14 +36,14 @@ router.post("/products", async (req, res) => {
       .limit(limit)
       .populate("categoryId");
 
-    res.json({ 
-      products, 
-      totalPages 
+    res.json({
+      products,
+      totalPages,
     });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
   }
 });
-  
-  module.exports = router;
+
+module.exports = router;
