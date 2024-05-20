@@ -1,15 +1,24 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
-import RupeeIcon from '@mui/icons-material/AttachMoney';
-import Custompaggin from "../common/Custompaggin"
+import RupeeIcon from "@mui/icons-material/AttachMoney";
+import Custompaggin from "../common/Custompaggin";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import Pagination from "@mui/material/Pagination";
 import Header from "../common/header";
 import { useProduct } from "@/context/Mycontext";
-import { Grid, Card, CardHeader, CardMedia, CardContent, CardActions, Typography, Button, Box } from '@mui/material';
-
+import {
+  Grid,
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Typography,
+  Button,
+  Box,
+} from "@mui/material";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -60,7 +69,6 @@ const StyledPagination = styled(Pagination)({
 export default function RecipeReviewCard() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState();
-  
 
   const [category, setCategory] = useState("");
   const [productName, setProductName] = useState("");
@@ -70,7 +78,9 @@ export default function RecipeReviewCard() {
   const { selectedProduct } = useProduct();
 
   useEffect(() => {
-    selectedProduct ? setProductName(selectedProduct): setProductName(productName);
+    selectedProduct
+      ? setProductName(selectedProduct)
+      : setProductName(productName);
 
     fetchProducts();
   }, [currentPage]);
@@ -82,13 +92,19 @@ export default function RecipeReviewCard() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ categoryName: category, productName, price, currentPage, limit: 8 }),
+        body: JSON.stringify({
+          categoryName: category,
+          productName,
+          price,
+          currentPage,
+          limit: 8,
+        }),
       });
       if (!response.ok) {
         throw new Error("Failed to fetch products");
       }
       const data = await response.json();
-      
+
       setProducts(data.products);
       setTotalPages(data.totalPages);
     } catch (error) {
@@ -96,19 +112,18 @@ export default function RecipeReviewCard() {
     }
   };
   const getImageUrl = (productName) => {
-    return `../../assets/order/${productName}.jpg` || "../../assets/order/food.jpg";
+    return (
+      `../../assets/order/${productName}.jpg` || "../../assets/order/food.jpg"
+    );
   };
   const handleAddToCart = (product) => {
- 
-    setCart(product)
-    
+    setCart(product);
   };
- 
 
   const handleFilter = () => {
     fetchProducts();
   };
- 
+
   const handlePaginationClick = (page) => {
     setCurrentPage(page);
     fetchProducts();
@@ -116,7 +131,9 @@ export default function RecipeReviewCard() {
   return (
     <>
       <Header Cart={cart} />
-      <FilterContainer style={{marginTop:"50px", width:"90%", marginLeft:"90px"}}>
+      <FilterContainer
+        style={{ marginTop: "50px", width: "90%", marginLeft: "90px" }}
+      >
         <FilterItem>
           <TextField
             label="Category"
@@ -144,63 +161,97 @@ export default function RecipeReviewCard() {
             fullWidth
           />
         </FilterItem>
-        <Button variant="contained" onClick={handleFilter} style={{backgroundColor:"orange"}}>
+        <Button
+          variant="contained"
+          onClick={handleFilter}
+          style={{ backgroundColor: "orange" }}
+        >
           Filter
         </Button>
       </FilterContainer>
       <Box sx={{ flexGrow: 1, padding: 2 }}>
-      <Grid container spacing={3}>
-        {products.slice(0, 8).map((product) => (
-          <Grid item xs={12} sm={6} md={3} key={product.id}>
-            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', borderRadius: '16px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
-              <CardMedia
-                component="img"
-                height="200"
-                src={product.image || "../../assets/order/food.jpg"} // Use product image or fallback image
-                alt={product.name}
-                style={{ objectFit: 'cover', borderTopLeftRadius: '16px', borderTopRightRadius: '16px' }}
-              />
-              <CardContent sx={{ padding: '16px' }}>
-                <Typography variant="body2" color="text.secondary" sx={{ marginBottom: '8px', minHeight: '60px', fontSize:"20px" }}>
-                  {product.description}
-                </Typography>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize:"20px", fontWeight:"900px" }}>
-                  <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-                    {product.name}
+        <Grid container spacing={3}>
+          {products.slice(0, 8).map((product) => (
+            <Grid item xs={12} sm={6} md={3} key={product.id}>
+              <Card
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  borderRadius: "16px",
+                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  height="200"
+                  src={product.image || "../../assets/order/food.jpg"} // Use product image or fallback image
+                  alt={product.name}
+                  style={{
+                    objectFit: "cover",
+                    borderTopLeftRadius: "16px",
+                    borderTopRightRadius: "16px",
+                  }}
+                />
+                <CardContent sx={{ padding: "16px" }}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      marginBottom: "8px",
+                      minHeight: "60px",
+                      fontSize: "20px",
+                    }}
+                  >
+                    {product.description}
                   </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <RupeeIcon sx={{ marginRight: '4px' }} />
-                    <Typography variant="body1" sx={{fontSize:"20px", fontWeight:"700"}}>
-                      {product.price}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      fontSize: "20px",
+                      fontWeight: "900px",
+                    }}
+                  >
+                    <Typography
+                      variant="h5"
+                      component="div"
+                      sx={{ flexGrow: 1 }}
+                    >
+                      {product.name}
                     </Typography>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <RupeeIcon sx={{ marginRight: "4px" }} />
+                      <Typography
+                        variant="body1"
+                        sx={{ fontSize: "20px", fontWeight: "700" }}
+                      >
+                        {product.price}
+                      </Typography>
+                    </Box>
                   </Box>
-                </Box>
-              </CardContent>
-              <CardActions sx={{ justifyContent: 'center', padding: '16px' }}>
-                <Button
-                  variant="contained"
-                  color="success"
-                  onClick={() => handleAddToCart(product)}
-                  sx={{ borderRadius: '8px', marginTop:"-20px" }}
-                >
-                  ADD
-                </Button>
-              </CardActions>
-             
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-      <Custompaggin
+                </CardContent>
+                <CardActions sx={{ justifyContent: "center", padding: "16px" }}>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => handleAddToCart(product)}
+                    sx={{ borderRadius: "8px", marginTop: "-20px" }}
+                  >
+                    ADD
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+        <Custompaggin
           currentPage={currentPage}
           totalPages={totalPages}
           handlePaginationClick={handlePaginationClick}
         />
-    </Box>
-
-
-    
-   
+      </Box>
     </>
   );
 }

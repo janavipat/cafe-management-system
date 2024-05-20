@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import lottie from "lottie-web";
@@ -75,14 +75,38 @@ const CheckoutForm = (props) => {
 
   return (
     <div style={{ display: "flex" }}>
-      <div style={{ flex: "50%", borderRight: "1px solid #ccc", paddingRight: "20px" }}>
-        <div id="lottie-animation" style={{ width: "80%", margin: "0 auto" }}></div>
+      <div
+        style={{
+          flex: "50%",
+          borderRight: "1px solid #ccc",
+          paddingRight: "20px",
+        }}
+      >
+        <div
+          id="lottie-animation"
+          style={{ width: "80%", margin: "0 auto" }}
+        ></div>
       </div>
       <div style={{ flex: "30%", marginLeft: "20px" }}>
-        <form onSubmit={handleSubmit} style={{ boxShadow: "0 4px 8px rgba(0,0,0,0.1)", padding: "20px",width:"600px", borderRadius: "8px", marginTop:"160px" , height:"500px"}}>
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+            padding: "20px",
+            width: "600px",
+            borderRadius: "8px",
+            marginTop: "160px",
+            height: "500px",
+          }}
+        >
           <div style={{ marginTop: "30px" }}>
-           
-            <div style={{ marginLeft: "20px", marginRight: "20px", marginTop: "20px" }}>
+            <div
+              style={{
+                marginLeft: "20px",
+                marginRight: "20px",
+                marginTop: "20px",
+              }}
+            >
               <PaymentElement />
             </div>
             <button
@@ -92,17 +116,26 @@ const CheckoutForm = (props) => {
                 width: "160px",
                 height: "50px",
                 backgroundColor: "green",
-                marginBottom:"20px",
+                marginBottom: "20px",
                 borderRadius: "30px",
                 position: "relative",
                 display: "block",
                 margin: "53px auto",
-              
               }}
             >
               {isLoading ? (
-                <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-                  <i className="fa fa-spinner fa-spin" style={{ color: "white" }}></i>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  <i
+                    className="fa fa-spinner fa-spin"
+                    style={{ color: "white" }}
+                  ></i>
                   Loading...
                 </div>
               ) : (
@@ -128,7 +161,7 @@ const CheckoutForm = (props) => {
       </div>
     </div>
   );
-              }  
+};
 
 const Payment = (props) => {
   const stripePromise = loadStripe(

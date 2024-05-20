@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect } from "react";
 import Swal from "sweetalert2";
 import lottie from "lottie-web";
@@ -130,7 +130,7 @@ const Success = () => {
         }}
         onClick={goToAccountPage}
       >
-       HOME 
+        HOME
       </button>
     </div>
   );
