@@ -1,5 +1,5 @@
-import React from 'react';
-import './pagination.css';
+import React from "react";
+import "./pagination.css";
 
 const Custompaggin = ({ totalPages, currentPage, handlePaginationClick }) => {
   return (
@@ -8,7 +8,7 @@ const Custompaggin = ({ totalPages, currentPage, handlePaginationClick }) => {
         <li
           key={page}
           onClick={() => handlePaginationClick(page)}
-          className={`page-item ${currentPage === page ? 'active' : ''}`}
+          className={`page-item ${currentPage === page ? "active" : ""}`}
         >
           {page}
         </li>
