@@ -43,12 +43,11 @@ const CartPage = () => {
       router.push("/login");
       return;
     }
-
-    // Assuming token is a JWT and contains user info in its payload
+    
     const decodedToken = JSON.parse(atob(token.split(".")[1]));
     const name = decodedToken.name;
     const email = decodedToken.email;
-    const contact = "1231231231"; // Fixed contact number
+    const contact = "1231231231"; 
 
     const orderDetails = {
       name: "user",
@@ -81,9 +80,11 @@ const CartPage = () => {
     } catch (error) {
       console.error("Error generating report", error);
     }
+    localStorage.removeItem('cart');
+
   };
 
-  // Calculate total price
+ 
   const totalPrice = cartItems.reduce(
     (acc, curr) => acc + (curr.price * curr.quantity || 0),
     0
